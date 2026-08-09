@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block page_title %}Add Parent{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto">
+
+<!-- PAGE HEADER -->
+<div class="mb-6 sm:mb-8">
+    <div class="flex items-center gap-3 sm:gap-4">
+
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-brand-blue to-brand-purple flex items-center justify-center text-white shadow-lg shadow-brand-blue/20 flex-shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                      d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4" stroke-width="1.8"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                      d="M19 8v6m3-3h-6"/>
+            </svg>
+        </div>
+
+        <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+                Add Parent
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Create a new parent account and profile.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ERROR MESSAGES -->
+{% if form.non_field_errors %}
+
+<div class="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200">
+
+    <div class="flex items-start gap-3">
+
+        <div class="w-9 h-9 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+
+        <div>
+            <p class="font-semibold text-rose-800 text-sm">
+                Please correct the following errors:
+            </p>
+
+            <ul class="list-disc list-inside text-rose-700 text-sm mt-1.5 space-y-1">
+                {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- FORM CARD -->
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+
+    <!-- CARD HEADER -->
+    <div class="px-5 py-5 sm:px-7 sm:py-6 border-b border-slate-100">
+
+        <h3 class="text-base sm:text-lg font-semibold text-slate-900">
+            Parent Information
+        </h3>
+
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+            Fill in the parent's details below.
+        </p>
+
+    </div>
+
+
+    <!-- FORM -->
+    <form method="post" novalidate>
+
+        {% csrf_token %}
+
+        <div class="p-5 sm:p-7">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+
+                {% for field in form %}
+
+                <div class="{% if field.name == 'address' or field.name == 'notes' or field.name == 'additional_info' or field.name == 'message' or field.name == 'bio' %}md:col-span-2{% endif %}">
+
+                    <!-- LABEL -->
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">
+
+                        {{ field.label }}
+
+                        {% if field.field.required %}
+                        <span class="text-rose-500 ml-0.5">*</span>
+                        {% endif %}
+
+                    </label>
+
+
+                    <!-- FIELD -->
+                    <div class="
+                        [&>input]:w-full
+                        [&>input]:rounded-xl
+                        [&>input]:border
+                        [&>input]:border-slate-200
+                        [&>input]:bg-slate-50
+                        [&>input]:px-4
+                        [&>input]:py-3
+                        [&>input]:text-sm
+                        [&>input]:text-slate-800
+                        [&>input]:outline-none
+                        [&>input]:transition-all
+                        [&>input]:duration-200
+                        [&>input]:focus:bg-white
+                        [&>input]:focus:border-brand-blue
+                        [&>input]:focus:ring-4
+                        [&>input]:focus:ring-brand-blue/10
+
+                        [&>textarea]:w-full
+                        [&>textarea]:min-h-[120px]
+                        [&>textarea]:rounded-xl
+                        [&>textarea]:border
+                        [&>textarea]:border-slate-200
+                        [&>textarea]:bg-slate-50
+                        [&>textarea]:px-4
+                        [&>textarea]:py-3
+                        [&>textarea]:text-sm
+                        [&>textarea]:text-slate-800
+                        [&>textarea]:outline-none
+                        [&>textarea]:resize-y
+                        [&>textarea]:transition-all
+                        [&>textarea]:duration-200
+                        [&>textarea]:focus:bg-white
+                        [&>textarea]:focus:border-brand-blue
+                        [&>textarea]:focus:ring-4
+                        [&>textarea]:focus:ring-brand-blue/10
+
+                        [&>select]:w-full
+                        [&>select]:rounded-xl
+                        [&>select]:border
+                        [&>select]:border-slate-200
+                        [&>select]:bg-slate-50
+                        [&>select]:px-4
+                        [&>select]:py-3
+                        [&>select]:text-sm
+                        [&>select]:text-slate-800
+                        [&>select]:outline-none
+                        [&>select]:transition-all
+                        [&>select]:duration-200
+                        [&>select]:focus:bg-white
+                        [&>select]:focus:border-brand-blue
+                        [&>select]:focus:ring-4
+                        [&>select]:focus:ring-brand-blue/10
+
+                        [&>input[type='checkbox']]:w-4
+                        [&>input[type='checkbox']]:h-4
+                        [&>input[type='checkbox']]:accent-brand-blue
+
+                        [&>input[type='radio']]:accent-brand-blue
+                    ">
+
+                        {{ field }}
+
+                    </div>
+
+
+                    <!-- HELP TEXT -->
+                    {% if field.help_text %}
+
+                    <p class="text-xs text-slate-400 mt-1.5">
+                        {{ field.help_text }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <!-- FIELD ERROR -->
+                    {% if field.errors %}
+
+                    <div class="flex items-start gap-1.5 mt-2">
+
+                        <svg class="w-3.5 h-3.5 text-rose-500 flex-shrink-0 mt-0.5"
+                             fill="none"
+                             stroke="currentColor"
+                             viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 01-18 0z"/>
+
+                        </svg>
+
+                        <p class="text-rose-600 text-xs font-medium">
+                            {{ field.errors|striptags }}
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 mt-8 pt-6 border-t border-slate-100">
+
+                <a href="{% url 'parents:list' %}"
+                   class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-center flex items-center justify-center gap-2 group">
+
+                    <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+
+                    </svg>
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="w-full sm:w-auto px-7 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-purple text-white text-sm font-semibold hover:opacity-90 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-brand-blue/20 focus:outline-none focus:ring-4 focus:ring-brand-blue/20 flex items-center justify-center gap-2 group">
+
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 4v16m8-8H4"/>
+
+                    </svg>
+
+                    Save Parent
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+{% endblock %}

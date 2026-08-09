@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block title %}Students - EduCore{% endblock %}
+{% block page_title %}Students{% endblock %}
+
+{% block content %}
+
+<!-- Add Student Button -->
+
+<div class="mb-6">
+    <a href="{% url 'students:add' %}"
+       class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-brand-blue text-white text-sm font-semibold shadow-sm hover:bg-blue-700 transition">
+
+    <span class="text-lg leading-none">+</span>
+    Add Student
+</a>
+
+</div>
+
+<!-- Student Cards -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+
+{% for student in students %}
+
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+
+    <!-- Card Top -->
+    <div class="p-5">
+
+        <div class="flex items-start justify-between">
+
+            <div class="flex items-center gap-4">
+
+                <!-- Avatar -->
+                <div class="w-14 h-14 rounded-2xl bg-brand-blue/10 text-brand-blue flex items-center justify-center text-lg font-bold">
+                    {{ student.user.first_name|slice:":1" }}{{ student.user.last_name|slice:":1" }}
+                </div>
+
+                <div class="min-w-0">
+                    <h3 class="font-semibold text-slate-800 truncate">
+                        {{ student.user.get_full_name|default:student.user.username }}
+                    </h3>
+
+                    <p class="text-xs text-slate-400 mt-1">
+                        {{ student.admission_no }}
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Status -->
+            {% if student.status == "ACTIVE" %}
+
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold flex-shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                Active
+            </span>
+
+            {% else %}
+
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-semibold flex-shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                Inactive
+            </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Divider -->
+        <div class="border-t border-slate-100 my-5"></div>
+
+
+        <!-- Student Information -->
+        <div class="space-y-3">
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Class
+                </span>
+
+                <span class="text-sm font-medium text-slate-700 text-right">
+                    {{ student.class_name|default:"—" }}
+                </span>
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Gender
+                </span>
+
+                <span class="text-sm text-slate-700">
+                    {{ student.get_gender_display|default:"—" }}
+                </span>
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Date of Birth
+                </span>
+
+                <span class="text-sm text-slate-700">
+                    {{ student.date_of_birth|default:"—" }}
+                </span>
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Phone
+                </span>
+
+                <span class="text-sm text-slate-700">
+                    {{ student.phone|default:"—" }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+    <div class="px-5 py-4 bg-slate-50 border-t border-slate-100">
+
+        <div class="grid grid-cols-3 gap-2">
+
+            <a href="{% url 'students:detail' student.pk %}"
+               class="text-center px-3 py-2 rounded-lg bg-white border border-slate-200 text-brand-blue text-xs font-semibold hover:bg-brand-blue hover:text-white transition">
+                View
+            </a>
+
+            <a href="{% url 'students:edit' student.pk %}"
+               class="text-center px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-100 transition">
+                Edit
+            </a>
+
+            <a href="{% url 'students:delete' student.pk %}"
+               class="text-center px-3 py-2 rounded-lg bg-white border border-red-100 text-red-500 text-xs font-semibold hover:bg-red-50 transition">
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% empty %}
+
+<!-- Empty State -->
+<div class="md:col-span-2 xl:col-span-3 bg-white rounded-2xl border border-slate-200 p-12 text-center">
+
+    <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-blue/10 flex items-center justify-center text-3xl mb-4">
+        🎓
+    </div>
+
+    <h3 class="text-lg font-semibold text-slate-800">
+        No students yet
+    </h3>
+
+    <p class="text-sm text-slate-500 mt-2">
+        Add your first student to start managing your student records.
+    </p>
+
+    <a href="{% url 'students:add' %}"
+       class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-xl bg-brand-blue text-white text-sm font-semibold hover:bg-blue-700 transition">
+        + Add Student
+    </a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- Pagination -->
+
+{% if is_paginated %}
+
+<div class="flex items-center justify-center gap-3 mt-6">
+
+{% if page_obj.has_previous %}
+
+<a href="?page={{ page_obj.previous_page_number }}"
+   class="px-4 py-2 rounded-xl border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 transition">
+    ← Previous
+</a>
+
+{% endif %}
+
+
+<div class="px-4 py-2 rounded-xl bg-brand-blue text-white text-sm font-semibold">
+    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+</div>
+
+
+{% if page_obj.has_next %}
+
+<a href="?page={{ page_obj.next_page_number }}"
+   class="px-4 py-2 rounded-xl border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 transition">
+    Next →
+</a>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

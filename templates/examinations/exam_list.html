@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block page_title %}Exams{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto space-y-7">
+
+```
+<!-- PAGE HEADER -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+    <div class="flex items-center gap-4">
+
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-blue to-brand-purple flex items-center justify-center text-white shadow-lg shadow-brand-blue/20 shrink-0">
+
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+            </svg>
+
+        </div>
+
+        <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                All Exams
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Manage examinations, results and academic sessions.
+            </p>
+        </div>
+
+    </div>
+
+
+    <a
+        href="{% url 'examinations:exam_add' %}"
+        class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-purple hover:from-blue-600 hover:to-purple-600 text-white text-sm font-semibold shadow-lg shadow-brand-blue/20 hover:-translate-y-0.5 transition-all duration-200"
+    >
+
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+        </svg>
+
+        Add Exam
+
+    </a>
+
+</div>
+
+
+<!-- EXAMS BY SESSION -->
+
+{% for session, session_exams in grouped_exams.items %}
+
+<div class="space-y-3">
+
+    <!-- SESSION HEADER -->
+    <div class="flex items-center gap-3">
+
+        <div class="w-2 h-7 rounded-full bg-gradient-to-b from-brand-blue to-brand-purple"></div>
+
+        <div>
+            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">
+                {{ session }}
+            </h3>
+
+            <p class="text-xs text-slate-400 mt-0.5">
+                Examination session
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- TABLE CARD -->
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+
+        <!-- DESKTOP / TABLET TABLE -->
+        <div class="overflow-x-auto">
+
+            <table class="w-full min-w-[760px] text-sm">
+
+                <thead>
+
+                    <tr class="bg-slate-50 border-b border-slate-200 text-left">
+
+                        <th class="px-5 sm:px-6 py-4 text-xs font-bold uppercase tracking-wide text-slate-500">
+                            Name
+                        </th>
+
+                        <th class="px-5 sm:px-6 py-4 text-xs font-bold uppercase tracking-wide text-slate-500">
+                            Term
+                        </th>
+
+                        <th class="px-5 sm:px-6 py-4 text-xs font-bold uppercase tracking-wide text-slate-500">
+                            Dates
+                        </th>
+
+                        <th class="px-5 sm:px-6 py-4 text-xs font-bold uppercase tracking-wide text-slate-500">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for exam in session_exams %}
+
+                    <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50/70 transition-colors">
+
+                        <!-- NAME -->
+                        <td class="px-5 sm:px-6 py-5">
+
+                            <div class="flex items-center gap-3">
+
+                                <div class="w-10 h-10 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center font-bold shrink-0">
+                                    {{ exam.name|slice:":1"|upper }}
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold text-slate-800">
+                                        {{ exam.name }}
+                                    </p>
+
+                                    <p class="text-xs text-slate-400 mt-0.5">
+                                        {{ session }}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- TERM -->
+                        <td class="px-5 sm:px-6 py-5">
+
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-purple-50 text-purple-700 text-xs font-semibold">
+                                {{ exam.get_term_display }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- DATES -->
+                        <td class="px-5 sm:px-6 py-5">
+
+                            <div class="flex items-center gap-2 text-slate-600 whitespace-nowrap">
+
+                                <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+
+                                <span>
+                                    {{ exam.start_date }} – {{ exam.end_date }}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+                        <td class="px-5 sm:px-6 py-5">
+
+                            <div class="flex items-center gap-2 flex-wrap">
+
+                                <a
+                                    href="{% url 'examinations:enter' %}?exam={{ exam.pk }}"
+                                    class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-blue/10 text-brand-blue hover:bg-brand-blue hover:text-white text-xs font-semibold transition"
+                                >
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5h10M11 12h10M11 19h10M4 5h.01M4 12h.01M4 19h.01"/>
+                                    </svg>
+
+                                    Enter Results
+                                </a>
+
+
+                                <a
+                                    href="{% url 'examinations:class_results' %}"
+                                    class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 text-xs font-semibold transition"
+                                >
+                                    View Results
+                                </a>
+
+
+                                <a
+                                    href="{% url 'examinations:exam_edit' exam.pk %}"
+                                    class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-semibold transition"
+                                >
+                                    Edit
+                                </a>
+
+
+                                <a
+                                    href="{% url 'examinations:exam_delete' exam.pk %}"
+                                    class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 text-xs font-semibold transition"
+                                >
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- MOBILE SCROLL INDICATOR -->
+
+        <div class="md:hidden flex items-center justify-center gap-2 px-4 py-3 bg-slate-50 border-t border-slate-100 text-xs text-slate-400">
+
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-3-3l3 3-3 3"/>
+            </svg>
+
+            Swipe left or right to view all details
+
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<!-- EMPTY STATE -->
+
+<div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-10 sm:p-14 text-center">
+
+    <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
+
+        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h4m5 5H6a2 2 0 01-2-2V5a2 2 0 012-2h8l5 5v11a2 2 0 01-2 2z"/>
+        </svg>
+
+    </div>
+
+    <h3 class="text-base font-bold text-slate-800">
+        No Exams Yet
+    </h3>
+
+    <p class="text-sm text-slate-500 mt-1 mb-6 max-w-sm mx-auto">
+        There are currently no examinations available. Create your first exam to get started.
+    </p>
+
+    <a
+        href="{% url 'examinations:exam_add' %}"
+        class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-purple text-white text-sm font-semibold shadow-lg shadow-brand-blue/20"
+    >
+
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+        </svg>
+
+        Add Your First Exam
+
+    </a>
+
+</div>
+
+{% endfor %}
+```
+
+</div>
+
+{% endblock %}

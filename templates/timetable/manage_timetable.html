@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+
+{% block page_title %}Manage Timetable{% endblock %}
+
+{% block content %}
+
+
+{% if messages %}
+    <div class="mb-6 space-y-3">
+        {% for message in messages %}
+            <div class="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700 shadow-sm">
+                
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100">
+                    ✓
+                </div>
+
+                <p>{{ message }}</p>
+
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+
+    <div>
+        <h2 class="text-2xl font-bold text-slate-800">
+            Manage Timetable
+        </h2>
+
+        <p class="text-sm text-slate-500 mt-1">
+            Create and manage class timetables by day and period.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- Class Selection -->
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 mb-6">
+
+    <div class="flex items-center gap-3 mb-5">
+
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <svg class="w-5 h-5"
+                 fill="none"
+                 stroke="currentColor"
+                 viewBox="0 0 24 24">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                </path>
+
+            </svg>
+        </div>
+
+        <div>
+            <h3 class="font-semibold text-slate-800">
+                Select Class
+            </h3>
+
+            <p class="text-xs text-slate-500">
+                Choose a class to manage its timetable.
+            </p>
+        </div>
+
+    </div>
+
+
+    <form method="get">
+
+        <div class="flex flex-col sm:flex-row gap-3">
+
+            <div class="flex-1">
+
+                <label class="block text-sm font-medium text-slate-700 mb-2">
+                    {{ class_form.class_obj.label }}
+                </label>
+
+                {{ class_form.class_obj }}
+
+            </div>
+
+
+            <div class="flex items-end">
+
+                <button type="submit"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-brand-blue text-white text-sm font-semibold shadow-sm hover:bg-blue-700 transition">
+
+                    <svg class="w-4 h-4"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+
+                    </svg>
+
+                    Load Timetable
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+
+{% if grid_form %}
+
+<!-- Selected Class Header -->
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 mb-6">
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+        <div class="flex items-center gap-4">
+
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+
+                <svg class="w-6 h-6"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+
+                </svg>
+
+            </div>
+
+
+            <div>
+
+                <h3 class="text-lg font-bold text-slate-800">
+                    {{ selected_class.name }}
+                </h3>
+
+                <p class="text-sm text-slate-500">
+                    Weekly timetable
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-2">
+
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
+
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+
+                {{ rows|length }} Periods
+
+            </span>
+
+
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold">
+
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+
+                {{ days|length }} Days
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Timetable Form -->
+<form method="post" id="timetable-form">
+
+    {% csrf_token %}
+
+    <input type="hidden"
+           name="class_id"
+           value="{{ selected_class.id }}">
+
+
+    <!-- Day Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+        {% for day_value, day_label in days %}
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-all duration-200">
+
+            <!-- Day Header -->
+            <div class="px-5 py-4 bg-slate-50 border-b border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+
+                            {{ day_label|slice:":1" }}
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-semibold text-slate-800">
+                                {{ day_label }}
+                            </h3>
+
+                            <p class="text-xs text-slate-400">
+                                Class schedule
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="text-xs font-medium text-slate-400">
+                        {{ rows|length }} periods
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Periods -->
+            <div class="p-4 space-y-3">
+
+                {% for row in rows %}
+
+                <div class="rounded-xl border border-slate-100 bg-slate-50/60 p-3 hover:border-blue-100 hover:bg-blue-50/30 transition">
+
+                    <div class="flex items-center justify-between gap-3 mb-2">
+
+                        <div>
+
+                            <p class="text-sm font-semibold text-slate-700">
+                                Period {{ row.period.number }}
+                            </p>
+
+                            <p class="text-[11px] text-slate-400 mt-0.5">
+                                {{ row.period.start_time }} – {{ row.period.end_time }}
+                            </p>
+
+                        </div>
+
+
+                        <span class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-500 flex items-center justify-center text-xs font-semibold">
+                            {{ row.period.number }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- Subject Field -->
+                    <div class="w-full">
+
+                        {% for field in row.fields %}
+
+                            {% if forloop.counter == forloop.parentloop.counter %}
+
+                                <div class="w-full">
+                                    {{ field }}
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="py-10 text-center">
+
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-slate-100 flex items-center justify-center text-xl mb-3">
+                        🕐
+                    </div>
+
+                    <p class="text-sm font-medium text-slate-600">
+                        No periods available
+                    </p>
+
+                    <p class="text-xs text-slate-400 mt-1">
+                        Add periods before creating a timetable.
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    {% if rows %}
+
+    <!-- Save Section -->
+    <div class="mt-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+            <div>
+
+                <p class="text-sm font-semibold text-slate-700">
+                    Ready to save?
+                </p>
+
+                <p class="text-xs text-slate-500 mt-1">
+                    Save the timetable for {{ selected_class.name }}.
+                </p>
+
+            </div>
+
+
+            <button type="submit"
+                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-blue text-white text-sm font-semibold shadow-sm hover:bg-blue-700 hover:shadow-md transition-all duration-200">
+
+                <svg class="w-5 h-5"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                    </path>
+
+                </svg>
+
+                Save Timetable
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</form>
+
+
+{% endif %}
+
+{% endblock %}

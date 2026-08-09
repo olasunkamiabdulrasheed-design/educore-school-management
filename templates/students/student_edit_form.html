@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Student - EduCore{% endblock %}
+{% block page_title %}Edit Student{% endblock %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto">
+
+
+    <!-- Page Header -->
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-800">
+                Edit Student
+            </h1>
+            <p class="text-sm text-slate-500 mt-1">
+                Update the student's information below.
+            </p>
+        </div>
+
+        <a href="{% url 'students:detail' student.pk %}"
+           class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl
+                  border border-slate-200 bg-white text-slate-600 text-sm font-medium
+                  hover:bg-slate-50 transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Back to Profile
+        </a>
+    </div>
+</div>
+
+
+<!-- Main Card -->
+<div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+
+    <!-- Card Header -->
+    <div class="px-5 sm:px-7 py-5 border-b border-slate-100 bg-slate-50/50">
+        <div class="flex items-center gap-3">
+
+            <div class="w-11 h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+            </div>
+
+            <div>
+                <h2 class="text-base sm:text-lg font-semibold text-slate-800">
+                    Student Information
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-500">
+                    Make your changes and save when you're finished.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Form -->
+    <form method="POST" class="p-5 sm:p-7 lg:p-8">
+
+        {% csrf_token %}
+
+
+        <!-- General Errors -->
+        {% if form.non_field_errors %}
+        <div class="mb-6 rounded-xl bg-red-50 border border-red-200 p-4">
+            <div class="flex items-start gap-3">
+
+                <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4 h-4 text-red-600"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <p class="text-sm font-semibold text-red-700">
+                        Please correct the following errors
+                    </p>
+
+                    <div class="text-xs sm:text-sm text-red-600 mt-1">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endif %}
+
+
+        <!-- Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+
+            {% for field in form %}
+
+            <div
+                class="
+                    {% if field.name == 'address' or field.name == 'guardian_name' or field.name == 'guardian_phone' %}
+                        md:col-span-2
+                    {% endif %}
+                "
+            >
+
+                <!-- Label -->
+                <label for="{{ field.id_for_label }}"
+                       class="block text-sm font-semibold text-slate-700 mb-1.5">
+
+                    {{ field.label }}
+
+                    {% if field.field.required %}
+                    <span class="text-red-500">*</span>
+                    {% endif %}
+
+                </label>
+
+
+                <!-- Input -->
+                <div class="relative">
+
+                    {{ field }}
+
+                </div>
+
+
+                <!-- Help Text -->
+                {% if field.help_text %}
+                <p class="text-xs text-slate-400 mt-1.5">
+                    {{ field.help_text }}
+                </p>
+                {% endif %}
+
+
+                <!-- Field Error -->
+                {% if field.errors %}
+                <div class="flex items-start gap-1.5 mt-1.5">
+
+                    <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+
+                    <p class="text-xs font-medium text-red-600">
+                        {{ field.errors|striptags }}
+                    </p>
+
+                </div>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Divider -->
+        <div class="border-t border-slate-100 mt-8 pt-6">
+
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+
+                <a href="{% url 'students:detail' student.pk %}"
+                   class="w-full sm:w-auto inline-flex items-center justify-center
+                          gap-2 px-6 py-2.5 rounded-xl border border-slate-200
+                          bg-white text-slate-600 text-sm font-semibold
+                          hover:bg-slate-50 hover:border-slate-300
+                          transition-all duration-200">
+
+                    <svg class="w-4 h-4"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="w-full sm:w-auto inline-flex items-center justify-center
+                               gap-2 px-7 py-2.5 rounded-xl bg-blue-600
+                               text-white text-sm font-semibold
+                               hover:bg-blue-700 active:bg-blue-800
+                               shadow-sm hover:shadow-md
+                               focus:outline-none focus:ring-2
+                               focus:ring-blue-500 focus:ring-offset-2
+                               transition-all duration-200">
+
+                    <svg class="w-4 h-4"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 13l4 4L19 7"/>
+                    </svg>
+
+                    Update Student
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+{% endblock %}

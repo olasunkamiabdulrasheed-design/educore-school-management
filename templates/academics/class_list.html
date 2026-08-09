@@ -1,0 +1,792 @@
+{% extends "base.html" %}
+
+{% block page_title %}Classes{% endblock %}
+
+{% block content %}
+
+<div class="w-full">
+
+<!-- Page Header -->
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+
+    <div>
+
+        <div class="flex items-center gap-3">
+
+            <div class="
+                w-11 h-11
+                rounded-xl
+                bg-gradient-to-br
+                from-brand-blue
+                to-brand-purple
+                flex items-center justify-center
+                text-white
+                shadow-lg
+                shadow-brand-blue/20
+                flex-shrink-0
+            ">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-5 h-5"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="1.8">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5M8 10h.01M12 10h.01M16 10h.01"/>
+
+                </svg>
+
+            </div>
+
+            <div>
+
+                <p class="
+                    text-[10px] sm:text-xs
+                    font-bold
+                    uppercase
+                    tracking-[.14em]
+                    text-brand-blue
+                ">
+                    Academic Management
+                </p>
+
+                <h2 class="
+                    text-xl sm:text-2xl
+                    font-extrabold
+                    text-slate-900
+                    tracking-tight
+                ">
+                    All Classes
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <a href="{% url 'academics:add' %}"
+       class="
+            w-full sm:w-auto
+            inline-flex
+            items-center
+            justify-center
+            gap-2
+            px-4 py-2.5
+            rounded-xl
+            bg-gradient-to-r
+            from-brand-blue
+            to-brand-purple
+            text-white
+            text-sm
+            font-semibold
+            shadow-lg
+            shadow-brand-blue/20
+            hover:shadow-xl
+            hover:-translate-y-0.5
+            transition
+            duration-200
+       ">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-4 h-4"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor"
+             stroke-width="2">
+
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4v16m8-8H4"/>
+
+        </svg>
+
+        Add Class
+
+    </a>
+
+</div>
+
+
+<!-- Classes Container -->
+
+<div class="
+    bg-white
+    rounded-2xl
+    border border-slate-200
+    shadow-sm
+    overflow-hidden
+">
+
+    <!-- Desktop / Tablet -->
+
+    <div class="hidden md:block overflow-x-auto">
+
+        <table class="w-full text-sm">
+
+            <thead class="bg-slate-50 border-b border-slate-100">
+
+                <tr>
+
+                    <th class="
+                        px-6 py-4
+                        text-left
+                        text-[11px]
+                        font-bold
+                        uppercase
+                        tracking-wider
+                        text-slate-500
+                    ">
+                        Name
+                    </th>
+
+                    <th class="
+                        px-6 py-4
+                        text-left
+                        text-[11px]
+                        font-bold
+                        uppercase
+                        tracking-wider
+                        text-slate-500
+                    ">
+                        Level
+                    </th>
+
+                    <th class="
+                        px-6 py-4
+                        text-left
+                        text-[11px]
+                        font-bold
+                        uppercase
+                        tracking-wider
+                        text-slate-500
+                    ">
+                        Class Teacher
+                    </th>
+
+                    <th class="
+                        px-6 py-4
+                        text-left
+                        text-[11px]
+                        font-bold
+                        uppercase
+                        tracking-wider
+                        text-slate-500
+                    ">
+                        Students
+                    </th>
+
+                    <th class="
+                        px-6 py-4
+                        text-left
+                        text-[11px]
+                        font-bold
+                        uppercase
+                        tracking-wider
+                        text-slate-500
+                    ">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for class in classes %}
+
+                <tr class="
+                    border-b border-slate-100
+                    last:border-b-0
+                    hover:bg-slate-50/70
+                    transition-colors
+                    duration-150
+                ">
+
+                    <!-- Name -->
+
+                    <td class="px-6 py-4">
+
+                        <a href="{% url 'academics:detail' class.pk %}"
+                           class="
+                                flex
+                                items-center
+                                gap-3
+                                group
+                           ">
+
+                            <div class="
+                                w-10 h-10
+                                rounded-xl
+                                bg-gradient-to-br
+                                from-brand-blue/10
+                                to-brand-purple/10
+                                text-brand-blue
+                                flex
+                                items-center
+                                justify-center
+                                font-bold
+                                text-sm
+                                flex-shrink-0
+                                group-hover:from-brand-blue
+                                group-hover:to-brand-purple
+                                group-hover:text-white
+                                transition
+                                duration-200
+                            ">
+
+                                {{ class.name|slice:":1"|upper }}
+
+                            </div>
+
+                            <div>
+
+                                <p class="
+                                    font-bold
+                                    text-slate-800
+                                    group-hover:text-brand-blue
+                                    transition
+                                ">
+                                    {{ class.name }}
+                                </p>
+
+                                <p class="text-xs text-slate-400 mt-0.5">
+                                    View class details
+                                </p>
+
+                            </div>
+
+                        </a>
+
+                    </td>
+
+
+                    <!-- Level -->
+
+                    <td class="px-6 py-4">
+
+                        <span class="
+                            inline-flex
+                            items-center
+                            px-2.5 py-1
+                            rounded-lg
+                            bg-slate-100
+                            text-slate-600
+                            text-xs
+                            font-semibold
+                        ">
+                            {{ class.level|default:"—" }}
+                        </span>
+
+                    </td>
+
+
+                    <!-- Teacher -->
+
+                    <td class="px-6 py-4">
+
+                        {% if class.class_teacher %}
+
+                            <div class="flex items-center gap-2.5">
+
+                                <div class="
+                                    w-8 h-8
+                                    rounded-lg
+                                    bg-brand-purple/10
+                                    text-brand-purple
+                                    flex
+                                    items-center
+                                    justify-center
+                                    text-xs
+                                    font-bold
+                                    flex-shrink-0
+                                ">
+
+                                    {{ class.class_teacher.user.get_full_name|default:class.class_teacher.user.username|slice:":1"|upper }}
+
+                                </div>
+
+                                <span class="text-sm font-medium text-slate-700">
+
+                                    {{ class.class_teacher.user.get_full_name|default:class.class_teacher.user.username }}
+
+                                </span>
+
+                            </div>
+
+                        {% else %}
+
+                            <span class="
+                                inline-flex
+                                items-center
+                                gap-1.5
+                                text-xs
+                                font-medium
+                                text-slate-400
+                            ">
+
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+
+                                Unassigned
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Students -->
+
+                    <td class="px-6 py-4">
+
+                        <span class="
+                            inline-flex
+                            items-center
+                            gap-1.5
+                            px-2.5 py-1
+                            rounded-lg
+                            bg-brand-blue/5
+                            text-brand-blue
+                            text-xs
+                            font-semibold
+                        ">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="w-3.5 h-3.5"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor"
+                                 stroke-width="2">
+
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+
+                            </svg>
+
+                            View
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Actions -->
+
+                    <td class="px-6 py-4">
+
+                        <div class="flex items-center gap-2">
+
+                            <a href="{% url 'academics:detail' class.pk %}"
+                               class="
+                                    inline-flex
+                                    items-center
+                                    gap-1.5
+                                    px-3 py-2
+                                    rounded-lg
+                                    bg-slate-100
+                                    text-slate-600
+                                    text-xs
+                                    font-semibold
+                                    hover:bg-brand-blue/10
+                                    hover:text-brand-blue
+                                    transition
+                               ">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="w-3.5 h-3.5"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke="currentColor"
+                                     stroke-width="2">
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+
+                                </svg>
+
+                                View
+
+                            </a>
+
+                            <a href="{% url 'academics:edit' class.pk %}"
+                               class="
+                                    inline-flex
+                                    items-center
+                                    gap-1.5
+                                    px-3 py-2
+                                    rounded-lg
+                                    bg-blue-50
+                                    text-blue-600
+                                    text-xs
+                                    font-semibold
+                                    hover:bg-blue-100
+                                    transition
+                               ">
+
+                                Edit
+
+                            </a>
+
+                            <a href="{% url 'academics:delete' class.pk %}"
+                               class="
+                                    inline-flex
+                                    items-center
+                                    gap-1.5
+                                    px-3 py-2
+                                    rounded-lg
+                                    bg-red-50
+                                    text-red-600
+                                    text-xs
+                                    font-semibold
+                                    hover:bg-red-100
+                                    transition
+                               ">
+
+                                Delete
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5" class="px-6 py-16 text-center">
+
+                        <div class="flex flex-col items-center">
+
+                            <div class="
+                                w-16 h-16
+                                rounded-2xl
+                                bg-slate-100
+                                text-slate-400
+                                flex
+                                items-center
+                                justify-center
+                                mb-4
+                            ">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="w-8 h-8"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke="currentColor"
+                                     stroke-width="1.5">
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5"/>
+
+                                </svg>
+
+                            </div>
+
+                            <h3 class="text-sm font-bold text-slate-700">
+                                No classes yet
+                            </h3>
+
+                            <p class="text-xs text-slate-400 mt-1 mb-5">
+                                Create your first class to get started.
+                            </p>
+
+                            <a href="{% url 'academics:add' %}"
+                               class="
+                                    inline-flex
+                                    items-center
+                                    gap-2
+                                    px-4 py-2
+                                    rounded-lg
+                                    bg-brand-blue
+                                    text-white
+                                    text-xs
+                                    font-semibold
+                                    hover:bg-brand-blue/90
+                                    transition
+                               ">
+
+                                <span>+</span>
+                                Add Class
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- Mobile Cards -->
+
+    <div class="md:hidden">
+
+        {% for class in classes %}
+
+        <div class="
+            p-4
+            border-b border-slate-100
+            last:border-b-0
+        ">
+
+            <!-- Main Class -->
+
+            <a href="{% url 'academics:detail' class.pk %}"
+               class="flex items-center gap-3 group">
+
+                <div class="
+                    w-11 h-11
+                    rounded-xl
+                    bg-gradient-to-br
+                    from-brand-blue/10
+                    to-brand-purple/10
+                    text-brand-blue
+                    flex
+                    items-center
+                    justify-center
+                    font-bold
+                    flex-shrink-0
+                ">
+
+                    {{ class.name|slice:":1"|upper }}
+
+                </div>
+
+                <div class="min-w-0 flex-1">
+
+                    <h3 class="
+                        text-sm
+                        font-bold
+                        text-slate-800
+                        truncate
+                        group-hover:text-brand-blue
+                    ">
+                        {{ class.name }}
+                    </h3>
+
+                    <p class="text-xs text-slate-400 mt-1">
+                        Level: {{ class.level|default:"—" }}
+                    </p>
+
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-5 h-5 text-slate-300 group-hover:text-brand-blue"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 5l7 7-7 7"/>
+
+                </svg>
+
+            </a>
+
+
+            <!-- Teacher -->
+
+            <div class="
+                mt-4
+                p-3
+                rounded-xl
+                bg-slate-50
+            ">
+
+                <p class="
+                    text-[10px]
+                    uppercase
+                    tracking-wider
+                    font-bold
+                    text-slate-400
+                    mb-1.5
+                ">
+                    Class Teacher
+                </p>
+
+                {% if class.class_teacher %}
+
+                    <p class="text-xs font-semibold text-slate-700">
+
+                        {{ class.class_teacher.user.get_full_name|default:class.class_teacher.user.username }}
+
+                    </p>
+
+                {% else %}
+
+                    <p class="text-xs font-medium text-slate-400">
+                        Unassigned
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="grid grid-cols-3 gap-2 mt-3">
+
+                <a href="{% url 'academics:detail' class.pk %}"
+                   class="
+                        flex
+                        items-center
+                        justify-center
+                        gap-1.5
+                        px-2
+                        py-2.5
+                        rounded-lg
+                        bg-slate-100
+                        text-slate-600
+                        text-xs
+                        font-semibold
+                        hover:bg-slate-200
+                        transition
+                   ">
+
+                    View
+
+                </a>
+
+                <a href="{% url 'academics:edit' class.pk %}"
+                   class="
+                        flex
+                        items-center
+                        justify-center
+                        px-2
+                        py-2.5
+                        rounded-lg
+                        bg-blue-50
+                        text-blue-600
+                        text-xs
+                        font-semibold
+                        hover:bg-blue-100
+                        transition
+                   ">
+
+                    Edit
+
+                </a>
+
+                <a href="{% url 'academics:delete' class.pk %}"
+                   class="
+                        flex
+                        items-center
+                        justify-center
+                        px-2
+                        py-2.5
+                        rounded-lg
+                        bg-red-50
+                        text-red-600
+                        text-xs
+                        font-semibold
+                        hover:bg-red-100
+                        transition
+                   ">
+
+                    Delete
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="px-5 py-14 text-center">
+
+            <div class="
+                w-16 h-16
+                mx-auto
+                rounded-2xl
+                bg-slate-100
+                text-slate-400
+                flex
+                items-center
+                justify-center
+                mb-4
+            ">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="1.5">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5"/>
+
+                </svg>
+
+            </div>
+
+            <h3 class="text-sm font-bold text-slate-700">
+                No classes yet
+            </h3>
+
+            <p class="text-xs text-slate-400 mt-1 mb-5">
+                Create your first class to get started.
+            </p>
+
+            <a href="{% url 'academics:add' %}"
+               class="
+                    inline-flex
+                    items-center
+                    gap-2
+                    px-4 py-2
+                    rounded-lg
+                    bg-brand-blue
+                    text-white
+                    text-xs
+                    font-semibold
+                    hover:bg-brand-blue/90
+                    transition
+               ">
+
+                <span>+</span>
+                Add Class
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

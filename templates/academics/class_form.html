@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+
+{% block page_title %}{% if object %}Edit Class{% else %}Add Class{% endif %}{% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-3xl mx-auto">
+
+<!-- Header -->
+
+<div class="mb-6">
+
+    <div class="flex items-center gap-3">
+
+        <div class="
+            w-11 h-11
+            rounded-xl
+            bg-gradient-to-br
+            from-brand-blue
+            to-brand-purple
+            flex items-center justify-center
+            text-white
+            shadow-lg
+            shadow-brand-blue/20
+            flex-shrink-0
+        ">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-5 h-5"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 stroke-width="1.8">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5M8 10h.01M12 10h.01M16 10h.01"/>
+
+            </svg>
+
+        </div>
+
+        <div>
+
+            <p class="
+                text-[10px] sm:text-xs
+                font-bold
+                uppercase
+                tracking-[.14em]
+                text-brand-blue
+            ">
+                Class Management
+            </p>
+
+            <h2 class="
+                text-xl sm:text-2xl
+                font-extrabold
+                text-slate-900
+                tracking-tight
+            ">
+                {% if object %}Edit Class{% else %}Add Class{% endif %}
+            </h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Form Card -->
+
+<div class="
+    bg-white
+    rounded-2xl
+    border border-slate-200
+    shadow-sm
+    overflow-hidden
+">
+
+    <div class="h-1 bg-gradient-to-r from-brand-blue via-brand-purple to-brand-teal"></div>
+
+    <div class="p-5 sm:p-7 lg:p-8">
+
+        <div class="mb-6">
+
+            <h3 class="text-base font-bold text-slate-800">
+                Class Information
+            </h3>
+
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">
+                {% if object %}
+                    Update the information for this class.
+                {% else %}
+                    Enter the details for the new class.
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        <!-- Form -->
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="space-y-5">
+
+                {% for field in form %}
+
+                <div>
+
+                    <label
+                        class="
+                            block
+                            text-sm
+                            font-semibold
+                            text-slate-700
+                            mb-2
+                        "
+                    >
+                        {{ field.label }}
+                    </label>
+
+                    <div class="
+                        [&_input]:w-full
+                        [&_input]:rounded-xl
+                        [&_input]:border
+                        [&_input]:border-slate-200
+                        [&_input]:bg-slate-50
+                        [&_input]:px-4
+                        [&_input]:py-3
+                        [&_input]:text-sm
+                        [&_input]:text-slate-800
+                        [&_input]:outline-none
+                        [&_input]:transition
+                        [&_input]:duration-200
+                        [&_input]:focus:border-brand-blue
+                        [&_input]:focus:bg-white
+                        [&_input]:focus:ring-4
+                        [&_input]:focus:ring-brand-blue/10
+
+                        [&_select]:w-full
+                        [&_select]:rounded-xl
+                        [&_select]:border
+                        [&_select]:border-slate-200
+                        [&_select]:bg-slate-50
+                        [&_select]:px-4
+                        [&_select]:py-3
+                        [&_select]:text-sm
+                        [&_select]:text-slate-800
+                        [&_select]:outline-none
+                        [&_select]:transition
+                        [&_select]:duration-200
+                        [&_select]:focus:border-brand-blue
+                        [&_select]:focus:bg-white
+                        [&_select]:focus:ring-4
+                        [&_select]:focus:ring-brand-blue/10
+
+                        [&_textarea]:w-full
+                        [&_textarea]:rounded-xl
+                        [&_textarea]:border
+                        [&_textarea]:border-slate-200
+                        [&_textarea]:bg-slate-50
+                        [&_textarea]:px-4
+                        [&_textarea]:py-3
+                        [&_textarea]:text-sm
+                        [&_textarea]:text-slate-800
+                        [&_textarea]:outline-none
+                        [&_textarea]:transition
+                        [&_textarea]:duration-200
+                        [&_textarea]:focus:border-brand-blue
+                        [&_textarea]:focus:bg-white
+                        [&_textarea]:focus:ring-4
+                        [&_textarea]:focus:ring-brand-blue/10
+                    ">
+
+                        {{ field }}
+
+                    </div>
+
+
+                    {% if field.errors %}
+
+                    <div class="
+                        mt-2
+                        flex
+                        items-start
+                        gap-2
+                        text-red-600
+                    ">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-4 h-4 mt-0.5 flex-shrink-0"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M12 9v4m0 4h.01M10.29 3.86l-8.12 14a2 2 0 001.73 3h16.2a2 2 0 001.73 3l-8.1-14a2 2 0 003.44 0z"/>
+
+                        </svg>
+
+                        <p class="text-xs leading-5">
+                            {{ field.errors|striptags }}
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <div class="
+                mt-8
+                pt-5
+                border-t border-slate-100
+            ">
+
+                <button
+                    type="submit"
+                    class="
+                        w-full
+                        sm:w-auto
+                        inline-flex
+                        items-center
+                        justify-center
+                        gap-2
+                        px-6
+                        py-3
+                        rounded-xl
+                        bg-gradient-to-r
+                        from-brand-blue
+                        to-brand-purple
+                        text-white
+                        text-sm
+                        font-semibold
+                        shadow-lg
+                        shadow-brand-blue/20
+                        hover:shadow-xl
+                        hover:-translate-y-0.5
+                        active:translate-y-0
+                        transition
+                        duration-200
+                        focus:outline-none
+                        focus:ring-4
+                        focus:ring-brand-blue/20
+                    "
+                >
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-4 h-4"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         stroke-width="2">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M5 13l4 4L19 7"/>
+
+                    </svg>
+
+                    Save Class
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

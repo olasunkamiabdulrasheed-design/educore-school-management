@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block page_title %}Edit Parent{% endblock %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto">
+
+<!-- HEADER -->
+<div class="mb-6">
+    <div class="flex items-center gap-3">
+
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-blue to-brand-purple flex items-center justify-center text-white shadow-lg shadow-brand-blue/20">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15.5 5.5a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M4 21a8 8 0 0116 0"/>
+            </svg>
+        </div>
+
+        <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+                Edit Parent
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Update the parent's account information.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- FORM CARD -->
+<div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+
+    <div class="p-5 sm:p-7 border-b border-slate-100">
+
+        <h3 class="text-base font-semibold text-slate-900">
+            Parent Information
+        </h3>
+
+        <p class="text-xs text-slate-500 mt-1">
+            Make the necessary changes below and save them.
+        </p>
+
+    </div>
+
+
+    <form method="post" class="p-5 sm:p-7">
+
+        {% csrf_token %}
+
+        <div class="space-y-5">
+
+            {% for field in form %}
+
+            <div>
+
+                <label
+                    for="{{ field.id_for_label }}"
+                    class="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                    {{ field.label }}
+                </label>
+
+
+                <div class="
+                    [&>input]:w-full
+                    [&>input]:rounded-xl
+                    [&>input]:border
+                    [&>input]:border-slate-200
+                    [&>input]:bg-slate-50
+                    [&>input]:px-4
+                    [&>input]:py-3
+                    [&>input]:text-sm
+                    [&>input]:text-slate-800
+                    [&>input]:outline-none
+                    [&>input]:transition
+                    [&>input]:focus:border-brand-blue
+                    [&>input]:focus:ring-4
+                    [&>input]:focus:ring-brand-blue/10
+
+                    [&>textarea]:w-full
+                    [&>textarea]:rounded-xl
+                    [&>textarea]:border
+                    [&>textarea]:border-slate-200
+                    [&>textarea]:bg-slate-50
+                    [&>textarea]:px-4
+                    [&>textarea]:py-3
+                    [&>textarea]:text-sm
+                    [&>textarea]:text-slate-800
+                    [&>textarea]:outline-none
+                    [&>textarea]:transition
+                    [&>textarea]:focus:border-brand-blue
+                    [&>textarea]:focus:ring-4
+                    [&>textarea]:focus:ring-brand-blue/10
+
+                    [&>select]:w-full
+                    [&>select]:rounded-xl
+                    [&>select]:border
+                    [&>select]:border-slate-200
+                    [&>select]:bg-slate-50
+                    [&>select]:px-4
+                    [&>select]:py-3
+                    [&>select]:text-sm
+                    [&>select]:text-slate-800
+                    [&>select]:outline-none
+                    [&>select]:transition
+                    [&>select]:focus:border-brand-blue
+                    [&>select]:focus:ring-4
+                    [&>select]:focus:ring-brand-blue/10
+                ">
+
+                    {{ field }}
+
+                </div>
+
+
+                {% if field.help_text %}
+                <p class="text-xs text-slate-400 mt-1.5">
+                    {{ field.help_text }}
+                </p>
+                {% endif %}
+
+
+                {% if field.errors %}
+                <p class="text-red-600 text-xs mt-2 font-medium">
+                    {{ field.errors|striptags }}
+                </p>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="mt-8 pt-6 border-t border-slate-100">
+
+            <button
+                type="submit"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-brand-blue to-brand-purple hover:opacity-90 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-brand-blue/20 transition"
+            >
+
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M5 13l4 4L19 7"/>
+                </svg>
+
+                Save Changes
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+{% endblock %}

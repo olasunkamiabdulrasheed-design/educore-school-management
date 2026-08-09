@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block page_title %}Periods{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+
+<div>
+    <h2 class="text-2xl font-bold text-slate-800">
+        Periods
+    </h2>
+
+    <p class="text-sm text-slate-500 mt-1">
+        Manage school timetable periods and class schedules.
+    </p>
+</div>
+
+<div class="flex items-center gap-2">
+
+    <a href="{% url 'timetable:manage' %}"
+       class="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition">
+        Manage Timetable
+    </a>
+
+    <a href="{% url 'timetable:period_add' %}"
+       class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold shadow-sm hover:bg-indigo-700 transition">
+
+        <span class="text-lg leading-none">+</span>
+        Add Period
+
+    </a>
+
+</div>
+
+</div>
+
+<!-- Period Cards -->
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+{% for period in periods %}
+
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+
+    <!-- Card Content -->
+    <div class="p-5">
+
+        <div class="flex items-start justify-between">
+
+            <div class="flex items-center gap-3">
+
+                <!-- Period Icon -->
+                <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                    {{ period.number }}
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-slate-800">
+                        Period {{ period.number }}
+                    </h3>
+
+                    <p class="text-xs text-slate-400 mt-1">
+                        Timetable Period
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Time Badge -->
+            <span class="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600 text-xs font-semibold">
+                Schedule
+            </span>
+
+        </div>
+
+
+        <!-- Divider -->
+        <div class="border-t border-slate-100 my-5"></div>
+
+
+        <!-- Period Information -->
+        <div class="space-y-3">
+
+            <div class="flex items-center justify-between">
+
+                <span class="text-xs text-slate-400">
+                    Start Time
+                </span>
+
+                <span class="text-sm font-medium text-slate-700">
+                    {{ period.start_time }}
+                </span>
+
+            </div>
+
+
+            <div class="flex items-center justify-between">
+
+                <span class="text-xs text-slate-400">
+                    End Time
+                </span>
+
+                <span class="text-sm font-medium text-slate-700">
+                    {{ period.end_time }}
+                </span>
+
+            </div>
+
+
+            <div class="flex items-center justify-between">
+
+                <span class="text-xs text-slate-400">
+                    Duration
+                </span>
+
+                <span class="text-sm text-slate-600">
+                    {{ period.start_time }} – {{ period.end_time }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+    <div class="px-5 py-4 bg-slate-50 border-t border-slate-100">
+
+        <div class="grid grid-cols-2 gap-2">
+
+            <a href="{% url 'timetable:period_edit' period.pk %}"
+               class="text-center px-3 py-2 rounded-lg bg-white border border-slate-200 text-indigo-600 text-xs font-semibold hover:bg-indigo-50 transition">
+                Edit
+            </a>
+
+            <a href="{% url 'timetable:period_delete' period.pk %}"
+               class="text-center px-3 py-2 rounded-lg bg-white border border-red-100 text-red-500 text-xs font-semibold hover:bg-red-50 transition">
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% empty %}
+
+<!-- Empty State -->
+<div class="sm:col-span-2 lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-12 text-center">
+
+    <div class="w-16 h-16 mx-auto rounded-2xl bg-indigo-50 flex items-center justify-center text-3xl mb-4">
+        🕐
+    </div>
+
+    <h3 class="text-lg font-semibold text-slate-800">
+        No periods yet
+    </h3>
+
+    <p class="text-sm text-slate-500 mt-2">
+        Add your first timetable period to start building the school schedule.
+    </p>
+
+    <a href="{% url 'timetable:period_add' %}"
+       class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition">
+
+        <span class="text-lg">+</span>
+        Add Period
+
+    </a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

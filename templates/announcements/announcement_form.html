@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block page_title %}{% if object %}Edit Announcement{% else %}Post Announcement{% endif %}{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto">
+
+<!-- HEADER -->
+
+<div class="mb-7">
+
+    <div class="flex items-center gap-4">
+
+        <div class="
+            w-12 h-12
+            rounded-2xl
+            bg-gradient-to-br
+            from-brand-blue
+            to-brand-purple
+            text-white
+            flex
+            items-center
+            justify-center
+            shadow-lg
+            shadow-brand-blue/20
+            shrink-0
+        ">
+
+            <svg
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.8"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 20h9"
+                />
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"
+                />
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h2 class="
+                text-2xl
+                sm:text-3xl
+                font-bold
+                tracking-tight
+                text-slate-900
+            ">
+                {% if object %}Edit Announcement{% else %}Post Announcement{% endif %}
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                {% if object %}
+                    Update the announcement details below.
+                {% else %}
+                    Create a new announcement for your school community.
+                {% endif %}
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FORM CARD -->
+
+<div class="
+    bg-white
+    rounded-2xl
+    border
+    border-slate-200
+    shadow-sm
+    overflow-hidden
+">
+
+    <!-- CARD HEADER -->
+
+    <div class="
+        px-5
+        sm:px-7
+        py-5
+        border-b
+        border-slate-100
+        bg-slate-50/70
+    ">
+
+        <div class="flex items-center gap-3">
+
+            <div class="
+                w-9
+                h-9
+                rounded-lg
+                bg-brand-blue/10
+                text-brand-blue
+                flex
+                items-center
+                justify-center
+            ">
+
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4 6h16M4 12h16M4 18h10"
+                    />
+                </svg>
+
+            </div>
+
+            <div>
+
+                <p class="text-sm font-semibold text-slate-800">
+                    Announcement Details
+                </p>
+
+                <p class="text-xs text-slate-500">
+                    Fill in the information below.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="p-5 sm:p-7">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="space-y-5">
+
+                {% for field in form %}
+
+                <div>
+
+                    <label class="
+                        block
+                        text-sm
+                        font-semibold
+                        text-slate-700
+                        mb-2
+                    ">
+                        {{ field.label }}
+                    </label>
+
+
+                    <div class="
+                        [&>input]:w-full
+                        [&>input]:rounded-xl
+                        [&>input]:border
+                        [&>input]:border-slate-200
+                        [&>input]:bg-slate-50
+                        [&>input]:px-4
+                        [&>input]:py-3
+                        [&>input]:text-sm
+                        [&>input]:text-slate-900
+                        [&>input]:outline-none
+                        [&>input]:transition-all
+
+                        [&>textarea]:w-full
+                        [&>textarea]:rounded-xl
+                        [&>textarea]:border
+                        [&>textarea]:border-slate-200
+                        [&>textarea]:bg-slate-50
+                        [&>textarea]:px-4
+                        [&>textarea]:py-3
+                        [&>textarea]:text-sm
+                        [&>textarea]:text-slate-900
+                        [&>textarea]:outline-none
+                        [&>textarea]:transition-all
+                        [&>textarea]:min-h-[140px]
+                        [&>textarea]:resize-y
+
+                        [&>select]:w-full
+                        [&>select]:rounded-xl
+                        [&>select]:border
+                        [&>select]:border-slate-200
+                        [&>select]:bg-slate-50
+                        [&>select]:px-4
+                        [&>select]:py-3
+                        [&>select]:text-sm
+                        [&>select]:text-slate-900
+                        [&>select]:outline-none
+                        [&>select]:transition-all
+
+                        [&>input:focus]:border-brand-blue
+                        [&>input:focus]:bg-white
+                        [&>input:focus]:ring-4
+                        [&>input:focus]:ring-brand-blue/10
+
+                        [&>textarea:focus]:border-brand-blue
+                        [&>textarea:focus]:bg-white
+                        [&>textarea:focus]:ring-4
+                        [&>textarea:focus]:ring-brand-blue/10
+
+                        [&>select:focus]:border-brand-blue
+                        [&>select:focus]:bg-white
+                        [&>select:focus]:ring-4
+                        [&>select:focus]:ring-brand-blue/10
+                    ">
+                        {{ field }}
+                    </div>
+
+
+                    {% if field.errors %}
+
+                    <p class="
+                        text-red-600
+                        text-xs
+                        mt-2
+                        flex
+                        items-start
+                        gap-1.5
+                    ">
+
+                        <span class="
+                            w-4
+                            h-4
+                            rounded-full
+                            bg-red-100
+                            flex
+                            items-center
+                            justify-center
+                            shrink-0
+                            font-bold
+                        ">
+                            !
+                        </span>
+
+                        <span>
+                            {{ field.errors|striptags }}
+                        </span>
+
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ACTION -->
+
+            <div class="
+                mt-7
+                pt-5
+                border-t
+                border-slate-100
+                flex
+                flex-col
+                sm:flex-row
+                sm:justify-end
+            ">
+
+                <button
+                    type="submit"
+                    class="
+                        w-full
+                        sm:w-auto
+                        inline-flex
+                        items-center
+                        justify-center
+                        gap-2
+                        rounded-xl
+                        bg-gradient-to-r
+                        from-brand-blue
+                        to-brand-purple
+                        hover:from-blue-600
+                        hover:to-purple-600
+                        text-white
+                        font-semibold
+                        text-sm
+                        py-3
+                        px-6
+                        shadow-lg
+                        shadow-brand-blue/20
+                        hover:shadow-xl
+                        hover:-translate-y-0.5
+                        active:translate-y-0
+                        transition-all
+                        duration-200
+                    ">
+
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M5 12h14M12 5l7 7-7 7"
+                        />
+                    </svg>
+
+                    Save Announcement
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER NOTE -->
+
+<div class="
+    mt-4
+    flex
+    items-center
+    gap-2
+    text-xs
+    text-slate-400
+">
+
+    <svg
+        class="w-4 h-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="1.8"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13 16h-1v-4h-1m1-4h.01M12 21a9 9 0 100-18 9 9 0 000 18z"
+        />
+    </svg>
+
+    <span>
+        Make sure your announcement details are accurate before saving.
+    </span>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,453 @@
+{% extends "base.html" %}
+
+{% block page_title %}Set Your Password{% endblock %}
+
+{% block content %}
+
+<div class="min-h-[calc(100vh-160px)] flex items-center justify-center py-8 sm:py-12">
+
+```
+<div class="w-full max-w-md">
+
+    <div class="
+        bg-white
+        rounded-2xl
+        border border-slate-200
+        shadow-sm
+        overflow-hidden
+    ">
+
+        <div class="
+            h-1
+            bg-gradient-to-r
+            from-brand-blue
+            via-brand-purple
+            to-brand-teal
+        "></div>
+
+        <div class="p-6 sm:p-8">
+
+            {% if valid %}
+
+            <!-- Icon -->
+
+            <div class="
+                w-14 h-14
+                rounded-2xl
+                bg-gradient-to-br
+                from-brand-blue/10
+                to-brand-purple/10
+                text-brand-blue
+                flex items-center justify-center
+                mb-5
+            ">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-7 h-7"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="1.8">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.5 10.5V7a4.5 4.5 0 00-9 0v3.5M6 10.5h12a1.5 1.5 0 011.5 1.5v8A1.5 1.5 0 0118 21.5H6A1.5 1.5 0 014.5 20v-8A1.5 1.5 0 016 10.5z"/>
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 15v2"/>
+
+                </svg>
+
+            </div>
+
+
+            <!-- Heading -->
+
+            <div class="mb-7">
+
+                <p class="
+                    text-[10px]
+                    font-bold
+                    uppercase
+                    tracking-[.14em]
+                    text-brand-blue
+                    mb-1
+                ">
+                    Account Activation
+                </p>
+
+                <h2 class="
+                    text-xl sm:text-2xl
+                    font-extrabold
+                    text-slate-900
+                    tracking-tight
+                ">
+                    Set Your Password
+                </h2>
+
+                <p class="
+                    text-sm
+                    text-slate-400
+                    mt-2
+                    leading-6
+                ">
+                    Create a secure password to activate your EduCore account.
+                </p>
+
+            </div>
+
+
+            <!-- Form -->
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {% for field in form %}
+
+                <div class="mb-5">
+
+                    <label class="
+                        block
+                        text-sm
+                        font-semibold
+                        text-slate-700
+                        mb-2
+                    ">
+                        {{ field.label }}
+                    </label>
+
+
+                    <!-- Field + Password Toggle -->
+
+                    <div class="relative">
+
+                        {{ field }}
+
+                        {% if "password" in field.name|lower %}
+
+                        <button
+                            type="button"
+                            onclick="togglePassword('{{ field.id_for_label }}', this)"
+                            class="
+                                absolute
+                                right-3
+                                top-1/2
+                                -translate-y-1/2
+                                w-9 h-9
+                                rounded-lg
+                                flex items-center justify-center
+                                text-slate-400
+                                hover:text-brand-blue
+                                hover:bg-brand-blue/10
+                                transition
+                                duration-200
+                                focus:outline-none
+                            "
+                            aria-label="Show password"
+                        >
+
+                            <!-- Eye -->
+
+                            <svg
+                                class="eye-open w-5 h-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                />
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+
+                            </svg>
+
+
+                            <!-- Eye Off -->
+
+                            <svg
+                                class="eye-closed w-5 h-5 hidden"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M3 3l18 18"
+                                />
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M10.584 10.587a2 2 0 002.829 2.829"
+                                />
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9.88 4.24A9.77 9.77 0 0112 4c4.477 0 8.268 2.943 9.542 7a10.05 10.05 0 01-2.157 3.568"
+                                />
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6.228 6.228C4.602 7.435 3.323 9.12 2.458 12c1.274 4.057 5.065 7 9.542 7 1.61 0 3.14-.397 4.48-1.098"
+                                />
+
+                            </svg>
+
+                        </button>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if field.errors %}
+
+                    <div class="
+                        flex
+                        items-start
+                        gap-2
+                        mt-2
+                        text-red-600
+                    ">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-4 h-4 mt-0.5 flex-shrink-0"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M12 9v3m0 4h.01M10.29 3.86l-7.82 13a2 2 0 001.71 3h15.64a2 2 0 001.71-3l-7.82-13a2 2 0 00-3.42 0z"/>
+
+                        </svg>
+
+                        <p class="text-xs leading-5">
+                            {{ field.errors|striptags }}
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="
+                        w-full
+                        inline-flex
+                        items-center
+                        justify-center
+                        gap-2
+                        px-5
+                        py-3
+                        rounded-xl
+                        bg-gradient-to-r
+                        from-brand-blue
+                        to-brand-purple
+                        text-white
+                        text-sm
+                        font-semibold
+                        shadow-lg
+                        shadow-brand-blue/20
+                        hover:shadow-xl
+                        hover:-translate-y-0.5
+                        active:translate-y-0
+                        transition
+                        duration-200
+                        focus:outline-none
+                        focus:ring-4
+                        focus:ring-brand-blue/20
+                    "
+                >
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-4 h-4"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         stroke-width="2">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M5 13l4 4L19 7"/>
+
+                    </svg>
+
+                    Activate Account
+
+                </button>
+
+            </form>
+
+
+            <!-- Security Note -->
+
+            <div class="
+                flex
+                items-start
+                gap-3
+                mt-6
+                p-3.5
+                rounded-xl
+                bg-slate-50
+                border border-slate-100
+            ">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-4 h-4 mt-0.5 text-slate-400 flex-shrink-0"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-7a2 2 0 00-2-2H6a2 2 0 00-2 2v7a2 2 0 002 2zM8 10V7a4 4 0 118 0v3"/>
+
+                </svg>
+
+                <p class="text-[11px] leading-5 text-slate-400">
+                    Choose a strong password that you don't use on other accounts.
+                </p>
+
+            </div>
+
+
+            {% else %}
+
+            <!-- Invalid Link -->
+
+            <div class="text-center py-5">
+
+                <div class="
+                    w-16 h-16
+                    mx-auto
+                    rounded-2xl
+                    bg-red-50
+                    text-red-500
+                    flex items-center justify-center
+                    mb-5
+                ">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-8 h-8"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         stroke-width="1.8">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M12 9v3m0 4h.01M10.29 3.86l-7.82 13a2 2 0 001.71 3h15.64a2 2 0 001.71-3l-7.82-13a2 2 0 00-3.42 0z"/>
+
+                    </svg>
+
+                </div>
+
+                <p class="
+                    text-lg
+                    font-bold
+                    text-slate-800
+                    mb-2
+                ">
+                    Activation Link Invalid
+                </p>
+
+                <p class="
+                    text-sm
+                    text-slate-400
+                    leading-6
+                    max-w-sm
+                    mx-auto
+                ">
+                    This activation link is invalid or has expired.
+                    Please request a new activation link to continue.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <p class="
+        text-center
+        text-[11px]
+        text-slate-400
+        mt-5
+    ">
+        EduCore &middot; School Management System
+    </p>
+
+</div>
+```
+
+</div>
+
+<!-- Password Show / Hide -->
+
+<script>
+
+function togglePassword(fieldId, button) {
+
+    const field = document.getElementById(fieldId);
+
+    if (!field) return;
+
+    const eyeOpen = button.querySelector(".eye-open");
+    const eyeClosed = button.querySelector(".eye-closed");
+
+    if (field.type === "password") {
+
+        field.type = "text";
+
+        eyeOpen.classList.add("hidden");
+        eyeClosed.classList.remove("hidden");
+
+        button.setAttribute("aria-label", "Hide password");
+
+    } else {
+
+        field.type = "password";
+
+        eyeOpen.classList.remove("hidden");
+        eyeClosed.classList.add("hidden");
+
+        button.setAttribute("aria-label", "Show password");
+
+    }
+
+}
+
+</script>
+
+{% endblock %}

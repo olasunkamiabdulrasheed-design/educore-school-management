@@ -1,0 +1,131 @@
+```html
+{% extends "base.html" %}
+
+{% block page_title %}Teacher Created{% endblock %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto">
+
+    <!-- Success Card -->
+    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+
+        <!-- Header -->
+        <div class="px-6 sm:px-8 py-7 border-b border-slate-100 bg-gradient-to-r from-emerald-50 to-white">
+
+            <div class="flex items-start gap-4">
+
+                <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800">
+                        Teacher Account Created
+                    </h2>
+
+                    <p class="text-sm text-slate-500 mt-1">
+                        The teacher account has been successfully created.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Content -->
+        <div class="p-6 sm:p-8">
+
+            <div class="mb-6">
+
+                <p class="text-sm text-slate-600 leading-6">
+                    Share the activation link below with
+                    <strong class="text-slate-800">
+                        {{ teacher.user.get_full_name|default:teacher.user.username }}
+                    </strong>
+                    so they can set their own password and activate their account.
+                </p>
+
+            </div>
+
+            <!-- Activation Link -->
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+
+                <div class="flex items-center justify-between gap-3 mb-2">
+
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Activation Link
+                    </p>
+
+                    <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        Ready
+                    </span>
+
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl p-3">
+
+                    <p class="text-sm text-slate-700 break-all leading-6">
+                        {{ activation_link }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Important Notice -->
+            <div class="mt-5 flex gap-3 rounded-2xl bg-blue-50 border border-blue-100 p-4">
+
+                <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-8h.01M12 22a10 10 0 110-20 10 10 0 010 20z"/>
+                </svg>
+
+                <p class="text-sm text-blue-700 leading-5">
+                    The teacher should use this link to create their password and activate their account.
+                </p>
+
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-slate-100">
+
+                <a href="{% url 'teachers:list' %}"
+                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2
+                          px-5 py-2.5 rounded-xl border border-slate-200
+                          text-slate-600 text-sm font-medium
+                          hover:bg-slate-50 hover:border-slate-300
+                          transition-all duration-200">
+
+                    <svg class="w-4 h-4"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+
+                    Back to Teachers
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

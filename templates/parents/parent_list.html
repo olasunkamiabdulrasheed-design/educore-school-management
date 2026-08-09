@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block page_title %}Parents{% endblock %}
+{% block content %}
+
+<div class="space-y-6">
+
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Parents</h2>
+        <p class="text-sm text-slate-500 mt-1">Manage parent accounts and linked children.</p>
+    </div>
+
+    <a href="{% url 'parents:add' %}"
+       class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold shadow-sm hover:shadow-md hover:from-blue-700 hover:to-indigo-700 transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4v16m8-8H4"/>
+        </svg>
+        Add Parent
+    </a>
+</div>
+
+<!-- Parent List -->
+<div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm overflow-hidden">
+
+    <!-- Desktop / Tablet Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full min-w-[760px] text-sm">
+
+            <thead>
+                <tr class="bg-slate-50/80 border-b border-slate-200">
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Parent
+                    </th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Phone
+                    </th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Children
+                    </th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-slate-100">
+
+                {% for parent in parents %}
+
+                <tr class="group hover:bg-slate-50/70 transition-colors duration-150">
+
+                    <!-- Parent -->
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center text-xs font-bold shadow-sm flex-shrink-0">
+                                {{ parent.user.username|slice:":2"|upper }}
+                            </div>
+
+                            <div class="min-w-0">
+                                <p class="font-semibold text-slate-800 truncate">
+                                    {{ parent.user.get_full_name|default:parent.user.username }}
+                                </p>
+                                <p class="text-xs text-slate-400 mt-0.5">
+                                    Parent account
+                                </p>
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <!-- Phone -->
+                    <td class="px-6 py-4">
+                        <span class="text-slate-600">
+                            {{ parent.phone|default:"—" }}
+                        </span>
+                    </td>
+
+                    <!-- Children -->
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-semibold">
+                            {{ parent.children.count }} child{{ parent.children.count|pluralize }}
+                        </span>
+                    </td>
+
+                    <!-- Actions -->
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-2">
+
+                            <a href="{% url 'parents:detail' parent.pk %}"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-semibold hover:bg-indigo-100 transition-colors">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                View
+                            </a>
+
+                            <a href="{% url 'parents:edit' parent.pk %}"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-xs font-semibold hover:bg-blue-100 transition-colors">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'parents:delete' parent.pk %}"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs font-semibold hover:bg-rose-100 transition-colors">
+                                Delete
+                            </a>
+
+                        </div>
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="4" class="px-6 py-16 text-center">
+
+                        <div class="flex flex-col items-center justify-center">
+
+                            <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                          d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                          d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                                </svg>
+                            </div>
+
+                            <p class="text-sm font-semibold text-slate-700">
+                                No parents yet
+                            </p>
+
+                            <p class="text-xs text-slate-400 mt-1">
+                                Parent accounts will appear here once added.
+                            </p>
+
+                        </div>
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

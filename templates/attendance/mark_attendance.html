@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block page_title %}Mark Attendance{% endblock %}
+{% block content %}
+
+<div class="max-w-4xl mx-auto">
+    <!-- Selection Card -->
+    <div class="bg-gradient-to-br from-indigo-50 to-white rounded-2xl shadow-lg p-8 mb-8 border border-indigo-100">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="p-2 bg-indigo-100 rounded-xl">
+                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800">Select Class & Date</h2>
+        </div>
+        
+        <form method="get">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ date_form.class_obj.label }}
+                    </label>
+                    <div class="relative">
+                        {{ date_form.class_obj }}
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ date_form.date.label }}
+                    </label>
+                    <div class="relative">
+                        {{ date_form.date }}
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Load Students
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Marking Form -->
+    {% if marking_form %}
+    <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                    <span class="bg-indigo-100 text-indigo-600 p-2 rounded-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </span>
+                    Marking Attendance
+                </h2>
+                <div class="flex items-center gap-4 mt-2">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-sm font-medium">
+                        {{ selected_class.name }}
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
+                        {{ date }}
+                    </span>
+                </div>
+            </div>
+            <div class="text-sm text-gray-500">
+                <span class="font-semibold">{{ marking_form|length }}</span> students
+            </div>
+        </div>
+
+        {% if marking_form.non_field_errors %}
+        <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-6">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {{ marking_form.non_field_errors }}
+            </div>
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="class_id" value="{{ selected_class.id }}">
+            <input type="hidden" name="date" value="{{ date }}">
+
+            <div class="space-y-1">
+                {% for field in marking_form %}
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100 last:border-0">
+                    <label class="text-sm font-medium text-gray-700 mb-2 sm:mb-0 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-indigo-400 rounded-full"></span>
+                        {{ field.label }}
+                    </label>
+                    <div class="w-full sm:w-48">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row gap-3 justify-end">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                    </svg>
+                    Save Attendance
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    {% elif selected_class is None and request.GET.class_obj %}
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-xl">
+        <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-gray-600 font-medium">No students found for that class.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

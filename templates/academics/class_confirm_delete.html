@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block page_title %}Delete Class{% endblock %}
+
+{% block content %}
+
+<div class="min-h-[calc(100vh-180px)] flex items-center justify-center py-6 sm:py-10">
+
+<div class="w-full max-w-lg">
+
+    <!-- Confirmation Card -->
+    <div class="
+        bg-white
+        rounded-2xl
+        border border-slate-200
+        shadow-sm
+        overflow-hidden
+    ">
+
+        <!-- Top Accent -->
+        <div class="h-1.5 bg-gradient-to-r from-red-500 via-red-600 to-brand-purple"></div>
+
+
+        <div class="p-5 sm:p-8">
+
+            <!-- Warning Icon -->
+
+            <div class="flex justify-center mb-5">
+
+                <div class="
+                    w-14 h-14 sm:w-16 sm:h-16
+                    rounded-2xl
+                    bg-red-50
+                    border border-red-100
+                    flex items-center justify-center
+                    text-red-600
+                ">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-7 h-7 sm:w-8 sm:h-8"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         stroke-width="1.8">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M12 9v4m0 4h.01M10.29 3.86l-8.12 14a2 2 0 001.73 3h16.2a2 2 0 001.73 3l-8.1-14a2 2 0 00-3.44 0z"/>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+
+            <!-- Heading -->
+
+            <div class="text-center">
+
+                <span class="
+                    inline-flex
+                    items-center
+                    px-2.5 py-1
+                    rounded-full
+                    bg-red-50
+                    text-red-600
+                    text-[10px] sm:text-xs
+                    font-bold
+                    uppercase
+                    tracking-wider
+                    mb-3
+                ">
+                    Destructive Action
+                </span>
+
+                <h2 class="
+                    text-xl sm:text-2xl
+                    font-extrabold
+                    text-slate-900
+                    tracking-tight
+                ">
+                    Delete Class?
+                </h2>
+
+                <p class="
+                    mt-3
+                    text-sm sm:text-base
+                    leading-6
+                    text-slate-500
+                    max-w-md
+                    mx-auto
+                ">
+                    Are you sure you want to delete
+                    <span class="font-semibold text-slate-800">
+                        {{ object.name }}
+                    </span>?
+                </p>
+
+            </div>
+
+
+            <!-- Important Information -->
+
+            <div class="
+                mt-6
+                p-4
+                rounded-xl
+                bg-amber-50
+                border border-amber-100
+                flex items-start gap-3
+            ">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="
+                        w-5 h-5
+                        text-amber-500
+                        flex-shrink-0
+                        mt-0.5
+                     "
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="1.8">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v4m0 4h.01M10.29 3.86l-8.12 14a2 2 0 001.73 3h16.2a2 2 0 001.73 3l-8.1-14a2 2 0 00-3.44 0z"/>
+
+                </svg>
+
+                <p class="text-xs sm:text-sm text-amber-800 leading-5">
+                    Students currently assigned to this class will have their class field cleared, not deleted.
+                </p>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <form method="post" class="mt-6">
+
+                {% csrf_token %}
+
+                <div class="
+                    flex flex-col-reverse
+                    sm:flex-row
+                    gap-3
+                ">
+
+                    <a href="{% url 'academics:list' %}"
+                       class="
+                            w-full sm:flex-1
+                            inline-flex
+                            items-center
+                            justify-center
+                            gap-2
+                            px-5 py-3
+                            rounded-xl
+                            border border-slate-200
+                            bg-white
+                            text-slate-700
+                            text-sm
+                            font-semibold
+                            hover:bg-slate-50
+                            hover:border-slate-300
+                            active:bg-slate-100
+                            transition
+                            duration-200
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-slate-200
+                       ">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-4 h-4"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M15 19l-7-7 7-7"/>
+
+                        </svg>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="
+                                w-full sm:flex-1
+                                inline-flex
+                                items-center
+                                justify-center
+                                gap-2
+                                px-5 py-3
+                                rounded-xl
+                                bg-red-600
+                                text-white
+                                text-sm
+                                font-semibold
+                                shadow-sm
+                                shadow-red-600/20
+                                hover:bg-red-700
+                                active:bg-red-800
+                                hover:shadow-md
+                                transition
+                                duration-200
+                                focus:outline-none
+                                focus:ring-2
+                                focus:ring-red-500/30
+                                focus:ring-offset-2
+                            ">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-4 h-4"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-9 0h14"/>
+
+                        </svg>
+
+                        Yes, Delete
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Supporting Text -->
+
+    <p class="text-center text-xs text-slate-400 mt-4 px-4">
+        You can cancel this action and return to your classes list.
+    </p>
+
+</div>
+
+</div>
+
+{% endblock %}
