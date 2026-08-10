@@ -143,3 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "dashboard_router"
 LOGOUT_REDIRECT_URL = "login"
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Project-level static files
+]

@@ -1,0 +1,933 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduCore · School Management Platform</title>
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <!-- Tailwind CDN (no build) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            accent: {
+              blue: '#3b82f6',
+              purple: '#8b5cf6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .text-gradient {
+      background: linear-gradient(to right, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-hover {
+      transition: all 0.25s ease-in-out;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
+    .bg-soft-gradient {
+      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .icon-md {
+      width: 24px;
+      height: 24px;
+      stroke-width: 1.8;
+    }
+    .icon-lg {
+      width: 32px;
+      height: 32px;
+      stroke-width: 1.8;
+    }
+
+    /* Hero Carousel Styles */
+    .hero-carousel {
+      position: relative;
+      height: 90vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      z-index: 0;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+    }
+
+    .hero-slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, 
+        rgba(48, 48, 49, 0.88) 0%, 
+        rgba(64, 64, 73, 0.78) 50%,
+        rgba(22, 21, 22, 0.72) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Carousel Controls */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 20px;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .carousel-btn.prev {
+      left: 20px;
+    }
+
+    .carousel-btn.next {
+      right: 20px;
+    }
+
+    /* Carousel Dots */
+    .carousel-dots {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 12px;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: white;
+      border-color: white;
+      transform: scale(1.2);
+    }
+
+    .carousel-dot:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Dropdown menu styles */
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      padding: 0.5rem 0;
+      z-index: 50;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 0.5rem 1.5rem;
+      color: #374151;
+      transition: all 0.15s;
+    }
+    .dropdown-menu a:hover {
+      background: #f3f4f6;
+      color: #1e40af;
+    }
+
+    /* Animation for text */
+    .fade-in-up {
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-inter antialiased">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200/60 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <div class="flex items-center gap-3 shrink-0">
+          <a href="{% url 'home' %}" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center shadow-md shadow-primary-200">
+              <span class="text-white font-bold text-xl tracking-tight">EC</span>
+            </div>
+            <span class="text-2xl font-bold tracking-tight text-primary-800">
+              Edu<span class="text-gradient">Core</span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex items-center gap-1">
+          <a href="{% url 'home' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
+            Home
+          </a>
+          <a href="{% url 'about' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/about/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
+            About
+          </a>
+          <a href="{% url 'features' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/features/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
+            Features
+          </a>
+          <a href="{% url 'contact' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/contact/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
+            Contact
+          </a>
+        </div>
+
+        <!-- Right Buttons -->
+        <div class="flex items-center gap-3">
+          <a href="{% url 'login' %}" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-full transition-all">
+            Log in
+          </a>
+          <a href="{% url 'login' %}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white text-sm font-semibold rounded-full transition-all duration-200 shadow-md shadow-primary-200 hover:shadow-lg hover:shadow-primary-300 hover:scale-[1.02]">
+            Get Started
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-all" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-200/60">
+      <div class="max-w-7xl mx-auto px-6 py-4 space-y-2">
+        <a href="{% url 'home' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
+          Home
+        </a>
+        <a href="{% url 'about' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/about/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
+          About
+        </a>
+        <a href="{% url 'features' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/features/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
+          Features
+        </a>
+        <a href="{% url 'contact' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/contact/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
+          Contact
+        </a>
+        <div class="pt-2 border-t border-gray-200/60">
+          <a href="{% url 'login' %}" class="block w-full text-center px-4 py-2.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white text-sm font-semibold rounded-full">
+            Get Started
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
+
+  <!-- ===== HERO SECTION WITH CAROUSEL BACKGROUND ===== -->
+  <section class="hero-carousel" id="heroCarousel">
+    <!-- Slide 1 -->
+    <div class="hero-slide active" style="background-image: url('{% static 'images/hero-bg-1.jpg' %}');"></div>
+    <div class="hero-slide" style="background-image: url('{% static 'images/hero-bg-2.jpg' %}');"></div>
+    <div class="hero-slide" style="background-image: url('{% static 'images/hero-bg-3.jpg' %}');"></div>
+    <div class="hero-slide" style="background-image: url('{% static 'images/hero-bg-4.jpg' %}');"></div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-btn prev" onclick="changeSlide(-1)" aria-label="Previous slide">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="carousel-btn next" onclick="changeSlide(1)" aria-label="Next slide">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <!-- Carousel Dots -->
+    <div class="carousel-dots" id="carouselDots">
+      <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+      <span class="carousel-dot" onclick="goToSlide(1)"></span>
+      <span class="carousel-dot" onclick="goToSlide(2)"></span>
+      <span class="carousel-dot" onclick="goToSlide(3)"></span>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero-content max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="max-w-3xl">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-blue-200 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/30 mb-6 fade-in-up">
+          Excellence in Education
+        </span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white fade-in-up delay-1">
+          Broad & Balanced
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">
+            Education
+          </span>
+          for Every Child
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-blue-50/90 max-w-2xl fade-in-up delay-2">
+          From Pre-School to Senior Secondary — nurturing disciplined, hardworking and forward-thinking students with EduCore.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4 fade-in-up delay-3">
+          <a href="{% url 'login' %}" 
+             class="px-8 py-3.5 bg-white text-primary-700 rounded-xl font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 flex items-center gap-2">
+            <span>Get Started</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#features" 
+             class="inline-flex items-center gap-2 px-6 py-3.5 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white font-semibold hover:bg-white/30 transition-all duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Learn More</span>
+          </a>
+        </div>
+        
+        <!-- Stats -->
+        <div class="mt-12 flex flex-wrap gap-8 border-t border-white/20 pt-8 fade-in-up delay-3">
+          <div><span class="block text-2xl font-bold text-white">2013</span><span class="text-sm text-blue-200">Founded</span></div>
+          <div><span class="block text-2xl font-bold text-white">Pre–SSS</span><span class="text-sm text-blue-200">School Levels</span></div>
+          <div><span class="block text-2xl font-bold text-white">100%</span><span class="text-sm text-blue-200">Committed Faculty</span></div>
+          <div><span class="block text-2xl font-bold text-white">Award</span><span class="text-sm text-blue-200">Winning School</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY CHOOSE US ===== -->
+  <section id="features" class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Why Choose Us</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Built for Every School's Growth</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">We combine academic rigour with moral formation, preparing students for a life of impact.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <!-- Card 1: Academic Excellence -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              <line x1="8" y1="7" x2="16" y2="7"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+              <line x1="8" y1="15" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Academic Excellence</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Proven curriculum from Pre-School to SSS, aligned with national standards and beyond. Our students consistently excel in exams and competitions.</p>
+        </div>
+
+        <!-- Card 2: Character Formation -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Character Formation</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">We raise good citizens — literate, disciplined, hardworking and God-fearing — through purposeful value education embedded in every subject.</p>
+        </div>
+
+        <!-- Card 3: 21st Century Teachers -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">21st Century Teachers</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Our educators are trained, passionate and continuously upskilled. Every classroom is a place of discovery, not just instruction.</p>
+        </div>
+
+        <!-- Card 4: Safe Environment -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Safe Environment</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">A secure, nurturing campus where every child feels valued, protected and motivated to reach their highest potential.</p>
+        </div>
+
+        <!-- Card 5: Award-Winning -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Award-Winning</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Recipients of Ogun State Governor's Essay Competition award, with students excelling in regional and national competitions.</p>
+        </div>
+
+        <!-- Card 6: Holistic Development -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Holistic Development</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Sports, arts, music, tech clubs and leadership programs complement academics for a truly well-rounded education.</p>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-sm text-gray-400 inline-flex items-center gap-2 border-t border-gray-200/60 pt-8">
+          <span class="inline-block w-2 h-2 rounded-full bg-primary-500"></span>
+          12+ Years of Excellence
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR ACHIEVEMENTS ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Achievements</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Proven Results, Real Impact</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">Our students and faculty have earned recognition at local, state and national levels — a testament to our commitment to excellence.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Achievement 1 -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 text-center hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <span class="block text-3xl font-bold text-primary-600">2018</span>
+          <p class="text-sm text-gray-600 mt-2 font-medium">Governor's Essay Competition Winner</p>
+          <p class="text-xs text-gray-400 mt-1">Ogun State Nursery & Primary School winner — a milestone achievement for our pupils.</p>
+        </div>
+
+        <!-- Achievement 2 -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 text-center hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <span class="block text-3xl font-bold text-primary-600">12+</span>
+          <p class="text-sm text-gray-600 mt-2 font-medium">Years of Consistent Excellence</p>
+          <p class="text-xs text-gray-400 mt-1">Top-performing students in state assessments year after year since 2013.</p>
+        </div>
+
+        <!-- Achievement 3 -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 text-center hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <span class="block text-3xl font-bold text-primary-600">100%</span>
+          <p class="text-sm text-gray-600 mt-2 font-medium">Bursary & Scholarship Awards</p>
+          <p class="text-xs text-gray-400 mt-1">Best exit-class students receive automatic bursary for the next class level.</p>
+        </div>
+
+        <!-- Achievement 4 -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 text-center hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <span class="block text-3xl font-bold text-primary-600">1k+</span>
+          <p class="text-sm text-gray-600 mt-2 font-medium">Growing Alumni Community</p>
+          <p class="text-xs text-gray-400 mt-1">Over a decade of graduates making positive marks in higher institutions and society.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FROM THE DIRECTOR'S DESK ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-soft-gradient border-y border-gray-200/60">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">From the Director</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">A Message from Our Director</h2>
+      </div>
+
+      <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-200/80">
+        <div class="flex items-start gap-4 mb-6">
+          <div class="w-1 h-20 bg-gradient-to-b from-primary-500 to-accent-purple rounded-full flex-shrink-0"></div>
+          <p class="text-gray-700 text-base md:text-lg leading-relaxed italic">
+            "Excellence and quality are our watchwords at EduCore. Since we registered our first pupil in 2013, we have been committed to raising leaders who are not just academically sound, but morally upright and socially responsible."
+          </p>
+        </div>
+
+        <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
+          Our platform promotes an all-round education, focusing on the total well-being of every child. We believe that every student deserves a teacher who cares, a curriculum that challenges, and an environment that inspires.
+        </p>
+
+        <div class="flex items-center gap-4 border-t border-gray-100 pt-6">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center text-white font-bold text-xl shadow-md shadow-primary-200">
+            MS
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 text-lg">Mr. Moyosola Soetan</p>
+            <p class="text-sm text-gray-500">Director of Schools, EduCore</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR SCHOOL LEVELS ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-soft-gradient border-y border-gray-200/60">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">School Levels</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">From Pre-School to Senior Secondary</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">A complete educational journey in one campus, ensuring continuity, familiarity and progressive growth.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <!-- Level 1: Crèche / Nursery -->
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200/80 text-center hover:border-primary-300 shadow-sm">
+          <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 text-sm">Crèche / Nursery</h4>
+          <p class="text-xs text-gray-500">Ages 0 – 5</p>
+          <span class="inline-block text-xs text-primary-600 font-medium mt-2 bg-primary-50 px-2 py-0.5 rounded-full">Foundation</span>
+        </div>
+
+        <!-- Level 2: Primary School -->
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200/80 text-center hover:border-primary-300 shadow-sm">
+          <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              <line x1="8" y1="7" x2="16" y2="7"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+              <line x1="8" y1="15" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 text-sm">Primary School</h4>
+          <p class="text-xs text-gray-500">Primary 1 – 6</p>
+          <span class="inline-block text-xs text-primary-600 font-medium mt-2 bg-primary-50 px-2 py-0.5 rounded-full">Core Academics</span>
+        </div>
+
+        <!-- Level 3: Junior Secondary -->
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200/80 text-center hover:border-primary-300 shadow-sm">
+          <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 text-sm">Junior Secondary</h4>
+          <p class="text-xs text-gray-500">JSS 1 – 3</p>
+          <span class="inline-block text-xs text-primary-600 font-medium mt-2 bg-primary-50 px-2 py-0.5 rounded-full">Discovery</span>
+        </div>
+
+        <!-- Level 4: Senior Secondary -->
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200/80 text-center hover:border-primary-300 shadow-sm">
+          <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c0 3 3 4 6 4s6-1 6-4v-5"/>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 text-sm">Senior Secondary</h4>
+          <p class="text-xs text-gray-500">SSS 1 – 3</p>
+          <span class="inline-block text-xs text-primary-600 font-medium mt-2 bg-primary-50 px-2 py-0.5 rounded-full">Specialisation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BEYOND THE CLASSROOM ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Beyond the Classroom</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Value-Added Programmes</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">Enrichment activities that build character, talent and leadership alongside academic work.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Programme 1: ICT & Tech Club -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">ICT & Tech Club</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Digital literacy, coding fundamentals and tech skills for the 21st century.</p>
+        </div>
+
+        <!-- Programme 2: Sports & Athletics -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12h12"/>
+              <path d="M12 6v12"/>
+              <circle cx="12" cy="12" r="10"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Sports & Athletics</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Football, athletics, indoor games and inter-house sports competitions.</p>
+        </div>
+
+        <!-- Programme 3: Music & Arts -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Music & Arts</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Creative expression through instrumental music, choral singing and visual arts.</p>
+        </div>
+
+        <!-- Programme 4: Debate & Oratory -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Debate & Oratory</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Public speaking, essay writing and debate clubs that sharpen critical thinking.</p>
+        </div>
+
+        <!-- Programme 5: Leadership & CDS -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M12 8v4"/>
+              <path d="M12 16h.01"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Leadership & CDS</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Community service, student government and character development seminars.</p>
+        </div>
+
+        <!-- Programme 6: Cultural & More -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Cultural & Excursions</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Field trips, cultural events, and special programmes for all-round growth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECHNOLOGY & INNOVATION ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-soft-gradient border-y border-gray-200/60">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Technology & Innovation</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Our ICT Infrastructure</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">Equipping students with 21st-century digital skills through modern technology and hands-on learning.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Left: Content -->
+        <div>
+          <div class="bg-white rounded-2xl p-8 border border-gray-200/80 shadow-sm">
+            <p class="text-gray-600 leading-relaxed">
+              EduCore boasts a state-of-the-art ICT centre with high-speed internet, modern computer labs, and interactive smart boards. Every student from Primary to Senior Secondary receives practical training in digital literacy, coding, and research skills.
+            </p>
+            <p class="text-gray-600 leading-relaxed mt-4">
+              Our ICT curriculum is designed to foster problem-solving, creativity, and digital responsibility. We integrate technology across all subjects, preparing our learners for a future where digital fluency is essential.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-4 mt-6">
+              <div class="bg-primary-50 rounded-xl p-4 text-center">
+                <span class="block text-2xl font-bold text-primary-600">1 Gbps</span>
+                <span class="text-xs text-gray-500">High-speed fibre</span>
+              </div>
+              <div class="bg-primary-50 rounded-xl p-4 text-center">
+                <span class="block text-2xl font-bold text-primary-600">100+</span>
+                <span class="text-xs text-gray-500">Workstations</span>
+              </div>
+              <div class="bg-primary-50 rounded-xl p-4 text-center">
+                <span class="block text-2xl font-bold text-primary-600">STEM</span>
+                <span class="text-xs text-gray-500">Coding & Robotics</span>
+              </div>
+              <div class="bg-primary-50 rounded-xl p-4 text-center">
+                <span class="block text-2xl font-bold text-primary-600">Smart</span>
+                <span class="text-xs text-gray-500">Interactive Boards</span>
+              </div>
+            </div>
+            
+            <div class="mt-6">
+              <a href="#" class="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors">
+                View ICT Gallery
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Image/Icon Grid -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white rounded-2xl p-6 border border-gray-200/80 text-center shadow-sm">
+            <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900 text-sm">Computer Labs</h4>
+            <p class="text-xs text-gray-500">Modern facilities</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-gray-200/80 text-center shadow-sm">
+            <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900 text-sm">Smart Boards</h4>
+            <p class="text-xs text-gray-500">Interactive learning</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-gray-200/80 text-center shadow-sm">
+            <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900 text-sm">Coding & Robotics</h4>
+            <p class="text-xs text-gray-500">STEM education</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-gray-200/80 text-center shadow-sm">
+            <div class="w-16 h-16 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900 text-sm">Digital Literacy</h4>
+            <p class="text-xs text-gray-500">21st century skills</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t border-gray-200/60 bg-white py-10 px-6 sm:px-8 lg:px-12">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-gray-700">EduCore</span>
+        <span class="hidden sm:inline text-gray-300">·</span>
+        <span class="text-gray-400 hidden sm:inline">Modern School Management Platform</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="{% url 'home' %}" class="hover:text-primary-600 transition-colors">Home</a>
+        <a href="{% url 'about' %}" class="hover:text-primary-600 transition-colors">About</a>
+        <a href="{% url 'features' %}" class="hover:text-primary-600 transition-colors">Features</a>
+        <a href="{% url 'contact' %}" class="hover:text-primary-600 transition-colors">Contact</a>
+        <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+        <span>© 2026 EduCore. All rights reserved.</span>
+        <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+        <span>v2.4.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CAROUSEL JAVASCRIPT ===== -->
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    let autoplayInterval;
+
+    function showSlide(index) {
+      // Remove active class from all slides and dots
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      // Add active class to current slide and dot
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+      
+      currentSlide = index;
+    }
+
+    function changeSlide(direction) {
+      let newIndex = currentSlide + direction;
+      
+      if (newIndex < 0) {
+        newIndex = slides.length - 1;
+      } else if (newIndex >= slides.length) {
+        newIndex = 0;
+      }
+      
+      showSlide(newIndex);
+      resetAutoplay();
+    }
+
+    function goToSlide(index) {
+      showSlide(index);
+      resetAutoplay();
+    }
+
+    function resetAutoplay() {
+      clearInterval(autoplayInterval);
+      autoplayInterval = setInterval(() => {
+        changeSlide(1);
+      }, 5000);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+      } else if (e.key === 'ArrowRight') {
+        changeSlide(1);
+      }
+    });
+
+    // Touch support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.getElementById('heroCarousel').addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.getElementById('heroCarousel').addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          changeSlide(1);
+        } else {
+          changeSlide(-1);
+        }
+      }
+    }, { passive: true });
+
+    // Pause autoplay on hover
+    const heroSection = document.getElementById('heroCarousel');
+    heroSection.addEventListener('mouseenter', function() {
+      clearInterval(autoplayInterval);
+    });
+    
+    heroSection.addEventListener('mouseleave', function() {
+      resetAutoplay();
+    });
+
+    // Initialize autoplay
+    resetAutoplay();
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

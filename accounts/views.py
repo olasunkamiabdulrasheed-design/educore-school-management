@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.shortcuts import redirect
+from django.views.generic import TemplateView
 # =====================================================
 from django.contrib.auth import login
 from django.contrib.auth.models import User as DjangoUser  # not used, just noting
@@ -20,6 +21,22 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from .forms import SettingsPasswordChangeForm, SettingsEmailForm
 
+
+# ==============
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'accounts/home.html')
+
+def about(request):
+    return render(request, 'accounts/about.html')
+
+def features(request):
+    return render(request, 'accounts/features.html')
+
+def contact(request):
+    return render(request, 'accounts/contact.html')
+# =================
 
 class DashboardPlaceholderView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/dashboard_placeholder.html"
@@ -37,6 +54,18 @@ class DashboardPlaceholderView(LoginRequiredMixin, TemplateView):
 #             return redirect("portal:teacher_dashboard")
 #         return redirect("dashboard")
 # ====================================================================================================
+
+
+class HomeView(TemplateView):
+    template_name = "accounts/home.html"
+
+
+class AboutView(TemplateView):
+    template_name = "accounts/about.html"
+
+
+
+
 
 class DashboardRouterView(LoginRequiredMixin, View):
     def get(self, request):

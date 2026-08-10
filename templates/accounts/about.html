@@ -1,0 +1,326 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us · EduCore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            accent: {
+              blue: '#3b82f6',
+              purple: '#8b5cf6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .text-gradient {
+      background: linear-gradient(to right, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-hover {
+      transition: all 0.25s ease-in-out;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1);
+    }
+    .bg-soft-gradient {
+      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .icon-md {
+      width: 24px;
+      height: 24px;
+      stroke-width: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200/60 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <div class="flex items-center gap-3 shrink-0">
+          <a href="{% url 'home' %}" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center shadow-md shadow-primary-200">
+              <span class="text-white font-bold text-xl tracking-tight">EC</span>
+            </div>
+            <span class="text-2xl font-bold tracking-tight text-primary-800">
+              Edu<span class="text-gradient">Core</span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex items-center gap-1">
+          <a href="{% url 'home' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all">Home</a>
+          <a href="{% url 'about' %}" class="px-4 py-2 text-sm font-semibold text-primary-700 border-b-2 border-primary-500">About</a>
+          <a href="{% url 'features' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all">Features</a>
+          <a href="{% url 'contact' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all">Contact</a>
+        </div>
+
+        <!-- Right Buttons -->
+        <div class="flex items-center gap-3">
+          <a href="{% url 'login' %}" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-full transition-all">Log in</a>
+          <a href="{% url 'login' %}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white text-sm font-semibold rounded-full transition-all duration-200 shadow-md shadow-primary-200 hover:shadow-lg hover:shadow-primary-300 hover:scale-[1.02]">
+            Get Started
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-all" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-200/60">
+      <div class="max-w-7xl mx-auto px-6 py-4 space-y-2">
+        <a href="{% url 'home' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Home</a>
+        <a href="{% url 'about' %}" class="block px-4 py-2 text-sm font-semibold text-primary-700 bg-primary-50 rounded-lg">About</a>
+        <a href="{% url 'features' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Features</a>
+        <a href="{% url 'contact' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Contact</a>
+        <div class="pt-2 border-t border-gray-200/60">
+          <a href="{% url 'login' %}" class="block w-full text-center px-4 py-2.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white text-sm font-semibold rounded-full">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
+
+  <!-- ===== ABOUT HERO ===== -->
+  <section class="bg-soft-gradient py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+      <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">About Us</span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight text-gray-900 mt-5">
+        Who We <span class="text-gradient">Are</span>
+      </h1>
+      <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+        Empowering schools worldwide with intelligent management solutions since 2013.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== OUR STORY ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Our Story</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Building the Future of Education Management</h2>
+          <p class="text-gray-600 mt-4 leading-relaxed">
+            EduCore was born from a simple observation: schools needed a better way to manage their operations. Founded in 2013, we set out to create a platform that would simplify administration, empower teachers, and improve student outcomes.
+          </p>
+          <p class="text-gray-600 mt-4 leading-relaxed">
+            Today, EduCore serves hundreds of schools across 20+ countries, helping them streamline everything from attendance tracking to fee management, all while maintaining the highest standards of security and reliability.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-6">
+            <div>
+              <span class="block text-2xl font-bold text-primary-600">12+</span>
+              <span class="text-sm text-gray-500">Years of Excellence</span>
+            </div>
+            <div>
+              <span class="block text-2xl font-bold text-primary-600">500+</span>
+              <span class="text-sm text-gray-500">Schools Trust Us</span>
+            </div>
+            <div>
+              <span class="block text-2xl font-bold text-primary-600">99.9%</span>
+              <span class="text-sm text-gray-500">Uptime Guarantee</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-soft-gradient rounded-2xl p-8 border border-gray-200/80">
+          <div class="aspect-square bg-white rounded-xl shadow-sm flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-32 h-32 text-primary-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR MISSION & VALUES ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-soft-gradient border-y border-gray-200/60">
+    <div class="max-w-7xl mx-auto text-center">
+      <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Our Mission</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">What Drives Us</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">Guided by a clear vision to transform educational administration.</p>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card-hover bg-white rounded-2xl p-8 border border-gray-200/80">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900">Our Mission</h3>
+          <p class="text-gray-600 text-sm mt-2 leading-relaxed">To provide schools with intuitive, powerful tools that simplify administration and enhance the educational experience for every stakeholder.</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-8 border border-gray-200/80">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M2 12h2"/><path d="M20 12h2"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900">Our Vision</h3>
+          <p class="text-gray-600 text-sm mt-2 leading-relaxed">A world where every school, regardless of size or location, has access to technology that unlocks the full potential of its students and teachers.</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-8 border border-gray-200/80">
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900">Our Values</h3>
+          <p class="text-gray-600 text-sm mt-2 leading-relaxed">Excellence, integrity, innovation, and a deep commitment to the success of every school community we serve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEADERSHIP TEAM ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
+    <div class="max-w-7xl mx-auto text-center">
+      <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Leadership</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Meet Our Team</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">Passionate educators and technologists dedicated to your success.</p>
+
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70">
+          <div class="w-24 h-24 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl font-bold text-primary-600">MS</span>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Mr. Moyosola Soetan</h3>
+          <p class="text-sm text-primary-600 font-medium">Director of Schools</p>
+          <p class="text-gray-500 text-sm mt-2">15+ years in educational leadership, passionate about leveraging technology for student success.</p>
+        </div>
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70">
+          <div class="w-24 h-24 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl font-bold text-primary-600">AO</span>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Dr. Adeola Ogunleye</h3>
+          <p class="text-sm text-primary-600 font-medium">Head of Curriculum Development</p>
+          <p class="text-gray-500 text-sm mt-2">Former principal with a PhD in Education Technology, shaping our academic tools.</p>
+        </div>
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70">
+          <div class="w-24 h-24 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl font-bold text-primary-600">BI</span>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Mr. Bamidele Ilori</h3>
+          <p class="text-sm text-primary-600 font-medium">Chief Technology Officer</p>
+          <p class="text-gray-500 text-sm mt-2">10+ years in EdTech, leading our engineering team to build robust, scalable solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-soft-gradient border-y border-gray-200/60">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Ready to Transform Your School?</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">Join hundreds of schools already using EduCore to simplify administration and enhance learning.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="{% url 'login' %}" class="px-8 py-3.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white rounded-xl font-semibold shadow-lg shadow-primary-200 hover:shadow-primary-300 transition-all duration-200 hover:scale-[1.02]">Get Started</a>
+        <a href="{% url 'contact' %}" class="px-8 py-3.5 bg-white border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-200">Contact Sales</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-gray-900 text-gray-300 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center">
+              <span class="text-white font-bold text-xl">EC</span>
+            </div>
+            <span class="text-xl font-bold text-white">EduCore</span>
+          </div>
+          <p class="text-sm text-gray-400 leading-relaxed">Empowering schools worldwide with intelligent management solutions since 2013.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="{% url 'home' %}" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="{% url 'about' %}" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="{% url 'features' %}" class="hover:text-white transition-colors">Features</a></li>
+            <li><a href="{% url 'contact' %}" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Support</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">API Reference</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Status</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact Us</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary-400 flex-shrink-0 mt-0.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="text-gray-400">123 Education Street,<br/>Lagos, Nigeria</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary-400"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:info@educore.com" class="text-gray-400 hover:text-white transition-colors">info@educore.com</a>
+            </li>
+            <li class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary-400"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:+2341234567890" class="text-gray-400 hover:text-white transition-colors">+234 123 456 7890</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
+        <span>© 2026 EduCore. All rights reserved.</span>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+          <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
