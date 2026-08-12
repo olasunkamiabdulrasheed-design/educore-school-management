@@ -1,0 +1,686 @@
+{% extends "base.html" %}
+
+{% block title %}Admission Details{% endblock %}
+
+{% block page_title %}
+    Admission Details
+{% endblock %}
+
+{% block content %}
+
+<div class="admission-page">
+
+    <!-- HEADER -->
+    <div class="admission-header">
+
+        <div>
+            <h1>Admission Application</h1>
+            <p>View application details</p>
+        </div>
+
+        <div class="admission-actions">
+
+            <a href="{% url 'admissions:edit' application.pk %}"
+               class="btn btn-primary">
+                Edit
+            </a>
+
+            <a href="{% url 'admissions:list' %}"
+               class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CARD -->
+    <div class="admission-card">
+
+        <!-- STUDENT INFORMATION -->
+        <div class="section-title">
+            <h2>Student Information</h2>
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>First Name</span>
+                <strong>{{ application.first_name }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Last Name</span>
+                <strong>{{ application.last_name }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Other Names</span>
+                <strong>
+                    {{ application.other_names|default:"—" }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Gender</span>
+                <strong>{{ application.get_gender_display }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Date of Birth</span>
+                <strong>{{ application.date_of_birth }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Email</span>
+                <strong>
+                    {{ application.email|default:"—" }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Phone</span>
+                <strong>
+                    {{ application.phone|default:"—" }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Applying For</span>
+                <strong>{{ application.applying_for }}</strong>
+            </div>
+
+            <div class="detail-item full-width">
+                <span>Address</span>
+                <strong>
+                    {{ application.address|default:"—" }}
+                </strong>
+            </div>
+
+            <div class="detail-item full-width">
+                <span>Previous School</span>
+                <strong>
+                    {{ application.previous_school|default:"—" }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- GUARDIAN INFORMATION -->
+        <div class="section-title">
+            <h2>Guardian Information</h2>
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Guardian Name</span>
+                <strong>
+                    {{ application.guardian_name }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Guardian Phone</span>
+                <strong>
+                    {{ application.guardian_phone }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Guardian Email</span>
+                <strong>
+                    {{ application.guardian_email|default:"—" }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Relationship</span>
+                <strong>
+                    {{ application.guardian_relationship|default:"—" }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- APPLICATION STATUS -->
+        <div class="section-title">
+            <h2>Application Status</h2>
+        </div>
+
+        <div class="status-container">
+
+            <div class="status-row">
+
+                <div>
+                    <span class="status-label">
+                        Current Status
+                    </span>
+
+                    <div class="status-raw">
+                        {{ application.status }}
+                    </div>
+                </div>
+
+
+                {% if application.status == "PENDING" %}
+
+                    <span class="status-badge status-pending">
+                        Pending
+                    </span>
+
+                {% elif application.status == "APPROVED" %}
+
+                    <span class="status-badge status-approved">
+                        Approved
+                    </span>
+
+                {% elif application.status == "REJECTED" %}
+
+                    <span class="status-badge status-rejected">
+                        Rejected
+                    </span>
+
+                {% else %}
+
+                    <span class="status-badge">
+                        {{ application.get_status_display }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PENDING ACTIONS -->
+            {% if application.status == "PENDING" %}
+
+                <div class="status-actions">
+
+                    <!-- APPROVE -->
+                    <form method="post"
+                          action="{% url 'admissions:status_update' application.pk 'APPROVED' %}">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="status-btn approve-btn">
+                            ✓ Approve
+                        </button>
+
+                    </form>
+
+
+                    <!-- REJECT -->
+                    <form method="post"
+                          action="{% url 'admissions:status_update' application.pk 'REJECTED' %}">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="status-btn reject-btn">
+                            ✕ Reject
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+            <!-- APPROVED -->
+            {% elif application.status == "APPROVED" %}
+
+                <div class="decision-message approved-message">
+
+                    <span class="decision-icon">✓</span>
+
+                    <div>
+                        <strong>Application Approved</strong>
+
+                        <p>
+                            This admission application has been approved.
+                        </p>
+                    </div>
+
+                </div>
+
+
+            <!-- REJECTED -->
+            {% elif application.status == "REJECTED" %}
+
+                <div class="decision-message rejected-message">
+
+                    <span class="decision-icon">✕</span>
+
+                    <div>
+                        <strong>Application Rejected</strong>
+
+                        <p>
+                            This admission application has been rejected.
+                        </p>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- APPLICATION DATE -->
+        <div class="section-title">
+            <h2>Application Information</h2>
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Application Date</span>
+
+                <strong>
+                    {{ application.application_date|date:"F d, Y - h:i A" }}
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Last Updated</span>
+
+                <strong>
+                    {{ application.updated_at|date:"F d, Y - h:i A" }}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+.admission-page {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+
+/* HEADER */
+
+.admission-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.admission-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.admission-header p {
+    margin: 6px 0 0;
+    color: #6b7280;
+}
+
+
+/* BUTTONS */
+
+.admission-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-secondary {
+    background: white;
+    color: #374151;
+    border-color: #d1d5db;
+}
+
+.btn-secondary:hover {
+    background: #f9fafb;
+}
+
+
+/* CARD */
+
+.admission-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 24px;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+/* SECTION */
+
+.section-title {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 12px;
+    margin: 0 0 20px;
+}
+
+.section-title:not(:first-child) {
+    margin-top: 32px;
+}
+
+.section-title h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+
+/* DETAILS */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.detail-item {
+    min-width: 0;
+    padding: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #f9fafb;
+    box-sizing: border-box;
+}
+
+.detail-item span {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+.detail-item strong {
+    display: block;
+    color: #111827;
+    overflow-wrap: anywhere;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* STATUS */
+
+.status-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f9fafb;
+}
+
+.status-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.status-raw {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+
+/* STATUS BADGES */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-approved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+
+/* STATUS ACTIONS */
+
+.status-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.status-actions form {
+    flex: 1;
+}
+
+.status-btn {
+    width: 100%;
+    min-height: 45px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: .2s ease;
+}
+
+.approve-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.approve-btn:hover {
+    background: #15803d;
+}
+
+.reject-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.reject-btn:hover {
+    background: #b91c1c;
+}
+
+
+/* DECISION MESSAGE */
+
+.decision-message {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid;
+}
+
+.decision-message strong {
+    display: block;
+    font-size: 15px;
+}
+
+.decision-message p {
+    margin: 4px 0 0;
+    font-size: 13px;
+}
+
+.decision-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.approved-message {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
+}
+
+.approved-message .decision-icon {
+    background: #dcfce7;
+}
+
+.rejected-message {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.rejected-message .decision-icon {
+    background: #fee2e2;
+}
+
+
+/* TABLET */
+
+@media (max-width: 768px) {
+
+    .admission-page {
+        padding: 16px;
+    }
+
+    .admission-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admission-actions {
+        width: 100%;
+    }
+
+    .btn {
+        flex: 1;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+    .admission-page {
+        padding: 10px;
+    }
+
+    .admission-card {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .admission-header h1 {
+        font-size: 22px;
+    }
+
+    .admission-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        flex: none;
+    }
+
+    .detail-item {
+        padding: 13px;
+    }
+
+    .status-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .status-badge {
+        align-self: flex-start;
+    }
+
+    .status-actions {
+        flex-direction: column;
+    }
+
+    .decision-message {
+        align-items: flex-start;
+    }
+
+}
+
+</style>
+
+{% endblock %}

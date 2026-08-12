@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block title %}Admissions - EduCore{% endblock %}
+{% block page_title %}Admissions{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+
+<div class="flex items-center justify-between mb-6">
+
+
+<div>
+    <h2 class="text-2xl font-bold text-slate-800">
+        Admissions
+    </h2>
+
+    <p class="text-sm text-slate-500 mt-1">
+        Review and manage student admission applications.
+    </p>
+</div>
+
+
+</div>
+
+<!-- Applications Grid -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+
+{% for application in applications %}
+
+<!-- Admission Card -->
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+
+    <!-- Card Top -->
+    <div class="p-5">
+
+        <div class="flex items-start justify-between gap-3">
+
+            <!-- Applicant -->
+            <div class="flex items-center gap-4">
+
+                <!-- Avatar -->
+                <div class="w-14 h-14 rounded-2xl bg-brand-blue/10 text-brand-blue flex items-center justify-center text-lg font-bold">
+                    {{ application.first_name|slice:":1" }}{{ application.last_name|slice:":1" }}
+                </div>
+
+                <div class="min-w-0">
+
+                    <h3 class="font-semibold text-slate-800 truncate">
+                        {{ application.first_name }}
+                        {{ application.last_name }}
+                    </h3>
+
+                    {% if application.other_names %}
+                    <p class="text-xs text-slate-400 mt-1 truncate">
+                        {{ application.other_names }}
+                    </p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- Status -->
+            <!-- Status -->
+{% if application.status == "PENDING" %}
+
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-semibold whitespace-nowrap">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+        Pending
+    </span>
+
+{% elif application.status == "APPROVED" %}
+
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold whitespace-nowrap">
+        <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+        Approved
+    </span>
+
+{% elif application.status == "REJECTED" %}
+
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 text-red-700 text-xs font-semibold whitespace-nowrap">
+        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+        Rejected
+    </span>
+
+{% else %}
+
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-50 text-slate-600 text-xs font-semibold whitespace-nowrap">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+        {{ application.get_status_display }}
+    </span>
+
+{% endif %}
+
+        </div>
+
+
+        <!-- Divider -->
+        <div class="border-t border-slate-100 my-5"></div>
+
+
+        <!-- Application Information -->
+        <div class="space-y-3">
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Applying For
+                </span>
+
+                <span class="text-sm font-medium text-slate-700 text-right">
+                    {{ application.applying_for }}
+                </span>
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Gender
+                </span>
+
+                <span class="text-sm text-slate-700">
+                    {{ application.get_gender_display }}
+                </span>
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Guardian
+                </span>
+
+                <span class="text-sm text-slate-700 text-right">
+                    {{ application.guardian_name }}
+                </span>
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Guardian Phone
+                </span>
+
+                <span class="text-sm text-slate-700">
+                    {{ application.guardian_phone }}
+                </span>
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs text-slate-400">
+                    Applied
+                </span>
+
+                <span class="text-sm text-slate-700">
+                    {{ application.application_date|date:"M d, Y" }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+    <div class="px-5 py-4 bg-slate-50 border-t border-slate-100">
+
+        <div class="grid grid-cols-3 gap-2">
+
+            <a href="{% url 'admissions:detail' application.pk %}"
+               class="text-center px-3 py-2 rounded-lg bg-white border border-slate-200 text-brand-blue text-xs font-semibold hover:bg-brand-blue hover:text-white transition">
+                View
+            </a>
+
+            <a href="{% url 'admissions:edit' application.pk %}"
+               class="text-center px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-100 transition">
+                Edit
+            </a>
+
+            <!--  -->
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% empty %}
+
+<!-- Empty State -->
+<div class="md:col-span-2 xl:col-span-3 bg-white rounded-2xl border border-slate-200 p-12 text-center">
+
+    <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-blue/10 flex items-center justify-center text-3xl mb-4">
+        🎓
+    </div>
+
+    <h3 class="text-lg font-semibold text-slate-800">
+        No admission applications yet
+    </h3>
+
+    <p class="text-sm text-slate-500 mt-2">
+        Admission applications will appear here when students apply.
+    </p>
+
+</div>
+
+{% endfor %}
+
+
+</div>
+
+<!-- Pagination -->
+
+{% if is_paginated %}
+
+<div class="flex items-center justify-center gap-3 mt-6">
+
+
+{% if page_obj.has_previous %}
+
+<a href="?page={{ page_obj.previous_page_number }}"
+   class="px-4 py-2 rounded-xl border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 transition">
+    ← Previous
+</a>
+
+{% endif %}
+
+
+<div class="px-4 py-2 rounded-xl bg-brand-blue text-white text-sm font-semibold">
+    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+</div>
+
+
+{% if page_obj.has_next %}
+
+<a href="?page={{ page_obj.next_page_number }}"
+   class="px-4 py-2 rounded-xl border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 transition">
+    Next →
+</a>
+
+{% endif %}
+
+
+</div>
+
+{% endif %}
+
+{% endblock %}

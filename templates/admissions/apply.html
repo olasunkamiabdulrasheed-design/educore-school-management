@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+
+{% block title %}Apply for Admission - EduCore{% endblock %}
+{% block page_title %}Apply for Admission{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-4">
+            🎓 Admission Application
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-bold text-slate-800">
+            Apply for Admission
+        </h1>
+
+        <p class="text-sm text-slate-500 mt-2 max-w-2xl">
+            Complete the form below to submit an admission application.
+            Please make sure the information provided is accurate.
+        </p>
+    </div>
+
+
+    <!-- Form -->
+    <form method="post"
+          class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="m-6 p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-sm">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+
+        <!-- Student Information -->
+        <div class="p-6 sm:p-8">
+
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-slate-800">
+                    Student Information
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Tell us about the student applying for admission.
+                </p>
+            </div>
+
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- First Name -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.first_name.label }}
+                    </label>
+
+                    {{ form.first_name }}
+
+                    {% if form.first_name.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.first_name.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Last Name -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.last_name.label }}
+                    </label>
+
+                    {{ form.last_name }}
+
+                    {% if form.last_name.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.last_name.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Other Names -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.other_names.label }}
+                    </label>
+
+                    {{ form.other_names }}
+
+                    {% if form.other_names.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.other_names.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Gender -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.gender.label }}
+                    </label>
+
+                    {{ form.gender }}
+
+                    {% if form.gender.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.gender.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Date of Birth -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.date_of_birth.label }}
+                    </label>
+
+                    {{ form.date_of_birth }}
+
+                    {% if form.date_of_birth.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.date_of_birth.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Class -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.applying_for.label }}
+                    </label>
+
+                    {{ form.applying_for }}
+
+                    {% if form.applying_for.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.applying_for.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.email.label }}
+                    </label>
+
+                    {{ form.email }}
+
+                    {% if form.email.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.email.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Phone -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.phone.label }}
+                    </label>
+
+                    {{ form.phone }}
+
+                    {% if form.phone.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.phone.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Previous School -->
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.previous_school.label }}
+                    </label>
+
+                    {{ form.previous_school }}
+
+                    {% if form.previous_school.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.previous_school.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Address -->
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.address.label }}
+                    </label>
+
+                    {{ form.address }}
+
+                    {% if form.address.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.address.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Guardian Information -->
+        <div class="border-t border-slate-100 p-6 sm:p-8 bg-slate-50/50">
+
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-slate-800">
+                    Parent / Guardian Information
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Provide the contact details of the student's parent or guardian.
+                </p>
+            </div>
+
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- Guardian Name -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.guardian_name.label }}
+                    </label>
+
+                    {{ form.guardian_name }}
+
+                    {% if form.guardian_name.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.guardian_name.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Relationship -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.guardian_relationship.label }}
+                    </label>
+
+                    {{ form.guardian_relationship }}
+
+                    {% if form.guardian_relationship.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.guardian_relationship.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Guardian Phone -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.guardian_phone.label }}
+                    </label>
+
+                    {{ form.guardian_phone }}
+
+                    {% if form.guardian_phone.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.guardian_phone.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+
+                <!-- Guardian Email -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">
+                        {{ form.guardian_email.label }}
+                    </label>
+
+                    {{ form.guardian_email }}
+
+                    {% if form.guardian_email.errors %}
+                    <p class="text-xs text-red-600 mt-1">
+                        {{ form.guardian_email.errors|striptags }}
+                    </p>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Submit -->
+        <div class="p-6 sm:p-8 border-t border-slate-100">
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+
+                <p class="text-xs text-slate-400 text-center sm:text-left">
+                    By submitting this form, you confirm that the information provided is accurate.
+                </p>
+
+                <button type="submit"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-blue text-white text-sm font-semibold shadow-sm hover:bg-blue-700 hover:shadow-md transition-all">
+
+                    <span>Submit Application</span>
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

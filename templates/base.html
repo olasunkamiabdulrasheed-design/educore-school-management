@@ -328,7 +328,35 @@
                 </span>
 
             </a>
-            
+        
+
+        <a href="{% url 'admissions:list' %}"
+   class="nav-link group flex items-center gap-3 px-3.5 py-3 rounded-xl
+   {% if request.resolver_match.app_name == 'admissions' %}
+       bg-gradient-to-r from-brand-blue/20 to-brand-purple/10 text-white border border-brand-blue/20
+   {% else %}
+       text-slate-400 hover:bg-white/[.06] hover:text-white
+   {% endif %}">
+
+    <span class="w-9 h-9 rounded-lg bg-white/[.05] flex items-center justify-center text-slate-400 group-hover:text-brand-amber transition">
+        <!-- admission icon -->
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-[18px] h-[18px]"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor"
+             stroke-width="1.8">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v12a2 2 0 01-2 2zM13 3v4h4"/>
+        </svg>
+    </span>
+
+    <span class="text-sm font-semibold">
+        Admissions
+    </span>
+
+</a>
 
             <a href="{% url 'academics:list' %}"
    class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/5 hover:text-white">

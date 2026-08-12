@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Application Submitted - EduCore{% endblock %}
+
+{% block page_title %}Application Submitted{% endblock %}
+
+{% block content %}
+
+<div class="max-w-xl mx-auto">
+
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 text-center">
+
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-50 flex items-center justify-center text-3xl mb-5">
+            ✓
+        </div>
+
+        <h2 class="text-2xl font-bold text-slate-800">
+            Application Submitted
+        </h2>
+
+        <p class="text-sm text-slate-500 mt-3 leading-6">
+            Thank you for submitting your admission application.
+            Our admissions team will review your application and
+            contact you with the next steps.
+        </p>
+
+        <div class="mt-6 flex flex-col sm:flex-row justify-center gap-3">
+
+            <a href="{% url 'admissions:apply' %}"
+               class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-brand-blue text-white text-sm font-semibold hover:bg-blue-700 transition">
+                Submit Another Application
+            </a>
+
+            <a href="/"
+               class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition">
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
