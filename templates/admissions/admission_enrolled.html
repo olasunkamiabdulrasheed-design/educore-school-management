@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block page_title %}Student Enrolled{% endblock %}
+{% block content %}
+
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 max-w-lg mx-auto">
+    <div class="mb-6">
+        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mb-4">✓</div>
+        <h2 class="text-xl font-bold text-slate-900">Student Enrolled Successfully</h2>
+        <p class="text-sm text-slate-500 mt-1">
+            {{ application.first_name }} {{ application.last_name }} has been admitted and a Student account was created.
+        </p>
+    </div>
+
+    <div class="bg-slate-50 rounded-xl p-4 mb-6 text-sm space-y-1">
+        <p><span class="text-slate-500">Application Reference:</span> <strong>{{ application.reference }}</strong></p>
+        <p><span class="text-slate-500">Admission Number:</span> <strong>{{ student.admission_no }}</strong></p>
+        <p><span class="text-slate-500">Class:</span> <strong>{{ student.class_name.name }}</strong></p>
+        <p><span class="text-slate-500">Username:</span> <strong>{{ student.user.username }}</strong></p>
+    </div>
+
+    <p class="text-sm text-slate-600 mb-2">
+        Share this activation link with the student/guardian so they can set their own password:
+    </p>
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm break-all mb-6 text-blue-800">
+        {{ activation_link }}
+    </div>
+
+    <a href="{% url 'admissions:detail' application.pk %}" class="text-blue-600 text-sm font-medium">
+        ← Back to Application
+    </a>
+</div>
+
+{% endblock %}

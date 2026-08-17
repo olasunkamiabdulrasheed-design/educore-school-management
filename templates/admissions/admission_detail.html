@@ -206,10 +206,9 @@
 
                         {% csrf_token %}
 
-                        <button type="submit"
-                                class="status-btn approve-btn">
+                        <a href="{% url 'admissions:approve' application.pk %}" class="w-32 px-2 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition">
                             ✓ Approve
-                        </button>
+                        </a>
 
                     </form>
 
@@ -538,6 +537,7 @@
 .reject-btn {
     background: #dc2626;
     color: white;
+    
 }
 
 .reject-btn:hover {

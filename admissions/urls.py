@@ -30,6 +30,10 @@ urlpatterns = [
         name="edit"
     ),
 
+    path("track/", views.TrackApplicationView.as_view(), name="track"),
+    
+    path("<int:pk>/approve/", views.AdmissionApproveView.as_view(), name="approve"),
+
     path(
         "apply/",
         views.AdmissionApplyView.as_view(),

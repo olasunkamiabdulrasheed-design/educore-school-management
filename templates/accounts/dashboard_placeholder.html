@@ -14,12 +14,12 @@
     <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
 
         <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.15em] text-brand-blue mb-1">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue mb-1">
                 Overview
             </p>
 
             <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-                Welcome back 👋
+                Welcome back
             </h2>
 
             <p class="text-sm text-slate-500 mt-1">
@@ -27,17 +27,16 @@
             </p>
         </div>
 
-
-        <!-- System status -->
+        <!-- System Status -->
 
         <div class="
             inline-flex
             items-center
-            gap-2
+            gap-2.5
             self-start
             lg:self-auto
-            px-3
-            py-2
+            px-3.5
+            py-2.5
             rounded-xl
             bg-white
             border
@@ -55,7 +54,7 @@
                     animate-ping
                     rounded-full
                     bg-emerald-400
-                    opacity-75
+                    opacity-60
                 "></span>
 
                 <span class="
@@ -69,14 +68,13 @@
 
             </span>
 
-            <span class="text-xs font-medium text-slate-600">
+            <span class="text-xs font-semibold text-slate-600">
                 System operational
             </span>
 
         </div>
 
     </div>
-
 
 
     <!-- ===================================================== -->
@@ -86,7 +84,9 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
 
 
+        <!-- ================================================= -->
         <!-- TEACHERS -->
+        <!-- ================================================= -->
 
         <div class="
             group
@@ -104,7 +104,7 @@
             duration-300
         ">
 
-            <div class="flex items-start justify-between">
+            <div class="flex items-start justify-between relative z-10">
 
                 <div>
 
@@ -119,7 +119,7 @@
                         mt-2
                         tracking-tight
                     ">
-                        78
+                        {{ total_teachers }}
                     </p>
 
                     <p class="text-xs text-slate-400 mt-2">
@@ -140,7 +140,10 @@
                     justify-center
                     group-hover:scale-105
                     transition
+                    duration-300
                 ">
+
+                    <!-- Users Icon -->
 
                     <svg
                         class="w-5 h-5"
@@ -164,8 +167,15 @@
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"
+                            d="M22 21v-2a4 4 0 00-3-3.87"
                         />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M16 3.13a4 4 0 010 7.75"
+                        />
+
                     </svg>
 
                 </div>
@@ -181,14 +191,16 @@
                 h-24
                 rounded-full
                 bg-purple-50
-                opacity-50
+                opacity-60
             "></div>
 
         </div>
 
 
 
+        <!-- ================================================= -->
         <!-- CLASSES -->
+        <!-- ================================================= -->
 
         <div class="
             group
@@ -206,7 +218,7 @@
             duration-300
         ">
 
-            <div class="flex items-start justify-between">
+            <div class="flex items-start justify-between relative z-10">
 
                 <div>
 
@@ -221,7 +233,7 @@
                         mt-2
                         tracking-tight
                     ">
-                        32
+                        {{ total_classes }}
                     </p>
 
                     <p class="text-xs text-slate-400 mt-2">
@@ -242,7 +254,10 @@
                     justify-center
                     group-hover:scale-105
                     transition
+                    duration-300
                 ">
+
+                    <!-- Building Icon -->
 
                     <svg
                         class="w-5 h-5"
@@ -254,8 +269,27 @@
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-6h6v6"
+                            d="M3 21h18"
                         />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M5 21V9l7-4 7 4v12"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 21v-6h6v6"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 10h.01M12 10h.01M15 10h.01"
+                        />
+
                     </svg>
 
                 </div>
@@ -271,14 +305,16 @@
                 h-24
                 rounded-full
                 bg-teal-50
-                opacity-50
+                opacity-60
             "></div>
 
         </div>
 
 
 
+        <!-- ================================================= -->
         <!-- FEES -->
+        <!-- ================================================= -->
 
         <div class="
             group
@@ -298,7 +334,7 @@
             xl:col-span-1
         ">
 
-            <div class="flex items-start justify-between">
+            <div class="flex items-start justify-between relative z-10">
 
                 <div>
 
@@ -313,7 +349,7 @@
                         mt-2
                         tracking-tight
                     ">
-                        ₦12.4M
+                        ₦{{ total_fees_paid|floatformat:0 }}
                     </p>
 
                     <p class="text-xs text-slate-400 mt-2">
@@ -334,7 +370,10 @@
                     justify-center
                     group-hover:scale-105
                     transition
+                    duration-300
                 ">
+
+                    <!-- Wallet Icon -->
 
                     <svg
                         class="w-5 h-5"
@@ -343,11 +382,33 @@
                         stroke="currentColor"
                         stroke-width="1.8"
                     >
+
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M12 8c-2.21 0-4 .895-4 2s1.79 2 4 2 4 .895 4 2-1.79 2-4 2m0-10v2m0 8v2m8-6c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8z"
+                            d="M3 7.5A2.5 2.5 0 015.5 5H19a2 2 0 012 2v10a2 2 0 01-2 2H5.5A2.5 2.5 0 013 16.5v-9z"
                         />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 8h16"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M16 13h5"
+                        />
+
+                        <circle
+                            cx="16"
+                            cy="13"
+                            r="1"
+                            fill="currentColor"
+                            stroke="none"
+                        />
+
                     </svg>
 
                 </div>
@@ -363,7 +424,7 @@
                 h-24
                 rounded-full
                 bg-amber-50
-                opacity-50
+                opacity-60
             "></div>
 
         </div>
@@ -373,7 +434,7 @@
 
 
     <!-- ===================================================== -->
-    <!-- QUICK CONTROL -->
+    <!-- QUICK ACCESS -->
     <!-- ===================================================== -->
 
     <div class="
@@ -400,6 +461,7 @@
 
             </div>
 
+
             <div class="
                 hidden
                 sm:flex
@@ -412,6 +474,8 @@
                 justify-center
             ">
 
+                <!-- Grid Icon -->
+
                 <svg
                     class="w-5 h-5"
                     fill="none"
@@ -419,11 +483,38 @@
                     stroke="currentColor"
                     stroke-width="1.8"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4 6h16M4 12h16M4 18h16"
+                    <rect
+                        x="4"
+                        y="4"
+                        width="6"
+                        height="6"
+                        rx="1"
                     />
+
+                    <rect
+                        x="14"
+                        y="4"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    />
+
+                    <rect
+                        x="4"
+                        y="14"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    />
+
+                    <rect
+                        x="14"
+                        y="14"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    />
+
                 </svg>
 
             </div>
@@ -439,11 +530,27 @@
             gap-3
         ">
 
-
-            <!-- Students -->
+{% if pending_admissions > 0 %}
+<a href="{% url 'admissions:list' %}" class="block bg-amber-50 border border-amber-200 rounded-2xl p-4 hover:bg-amber-100 transition">
+    <div class="flex items-center gap-3">
+        <span class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg flex-shrink-0">
+            🔔
+        </span>
+        <div>
+            <p class="text-sm font-semibold text-amber-900">
+                {{ pending_admissions }} new admission application{{ pending_admissions|pluralize }} awaiting review
+            </p>
+            <p class="text-xs text-amber-700 mt-0.5">Click to review pending applications →</p>
+        </div>
+    </div>
+</a>
+{% endif %}
+            <!-- ================================================= -->
+            <!-- STUDENTS -->
+            <!-- ================================================= -->
 
             <a
-                href="#"
+                href="{% url 'students:list' %}"
                 class="
                     group
                     rounded-xl
@@ -452,14 +559,15 @@
                     p-4
                     hover:border-brand-blue/30
                     hover:bg-brand-blue/5
-                    transition
+                    transition-all
+                    duration-200
                 "
             >
 
                 <div class="
-                    w-9
-                    h-9
-                    rounded-lg
+                    w-10
+                    h-10
+                    rounded-xl
                     bg-blue-50
                     text-brand-blue
                     flex
@@ -469,7 +577,30 @@
                     group-hover:scale-105
                     transition
                 ">
-                    🎓
+
+                    <!-- Student/User Icon -->
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+                        <circle
+                            cx="12"
+                            cy="8"
+                            r="3"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M5 20a7 7 0 0114 0"
+                        />
+
+                    </svg>
+
                 </div>
 
                 <p class="text-sm font-semibold text-slate-700">
@@ -484,10 +615,12 @@
 
 
 
-            <!-- Teachers -->
+            <!-- ================================================= -->
+            <!-- TEACHERS -->
+            <!-- ================================================= -->
 
             <a
-                href="#"
+                href="{% url 'teachers:list' %}"
                 class="
                     group
                     rounded-xl
@@ -496,22 +629,61 @@
                     p-4
                     hover:border-brand-purple/30
                     hover:bg-brand-purple/5
-                    transition
+                    transition-all
+                    duration-200
                 "
             >
 
                 <div class="
-                    w-9
-                    h-9
-                    rounded-lg
+                    w-10
+                    h-10
+                    rounded-xl
                     bg-purple-50
                     text-brand-purple
                     flex
                     items-center
                     justify-center
                     mb-3
+                    group-hover:scale-105
+                    transition
                 ">
-                    👨‍🏫
+
+                    <!-- Teacher Icon -->
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <circle
+                            cx="9"
+                            cy="7"
+                            r="3"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 20a6 6 0 0112 0"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M16 4v6"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M13 7h6"
+                        />
+
+                    </svg>
+
                 </div>
 
                 <p class="text-sm font-semibold text-slate-700">
@@ -526,10 +698,12 @@
 
 
 
-            <!-- Classes -->
+            <!-- ================================================= -->
+            <!-- CLASSES -->
+            <!-- ================================================= -->
 
             <a
-                href="#"
+                href="{% url 'academics:list' %}"
                 class="
                     group
                     rounded-xl
@@ -538,22 +712,55 @@
                     p-4
                     hover:border-brand-teal/30
                     hover:bg-brand-teal/5
-                    transition
+                    transition-all
+                    duration-200
                 "
             >
 
                 <div class="
-                    w-9
-                    h-9
-                    rounded-lg
+                    w-10
+                    h-10
+                    rounded-xl
                     bg-teal-50
                     text-brand-teal
                     flex
                     items-center
                     justify-center
                     mb-3
+                    group-hover:scale-105
+                    transition
                 ">
-                    🏫
+
+                    <!-- School Icon -->
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 21h18"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M5 21V9l7-5 7 5v12"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 21v-5h6v5"
+                        />
+
+                    </svg>
+
                 </div>
 
                 <p class="text-sm font-semibold text-slate-700">
@@ -568,10 +775,12 @@
 
 
 
-            <!-- Attendance -->
+            <!-- ================================================= -->
+            <!-- ATTENDANCE -->
+            <!-- ================================================= -->
 
             <a
-                href="#"
+                href="{% url 'attendance:mark' %}"
                 class="
                     group
                     rounded-xl
@@ -580,22 +789,56 @@
                     p-4
                     hover:border-emerald-300
                     hover:bg-emerald-50
-                    transition
+                    transition-all
+                    duration-200
                 "
             >
 
                 <div class="
-                    w-9
-                    h-9
-                    rounded-lg
+                    w-10
+                    h-10
+                    rounded-xl
                     bg-emerald-50
                     text-emerald-600
                     flex
                     items-center
                     justify-center
                     mb-3
+                    group-hover:scale-105
+                    transition
                 ">
-                    ✓
+
+                    <!-- Calendar Check Icon -->
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <rect
+                            x="3"
+                            y="4"
+                            width="18"
+                            height="17"
+                            rx="2"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            d="M16 2v4M8 2v4M3 10h18"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M8 15l2 2 5-5"
+                        />
+
+                    </svg>
+
                 </div>
 
                 <p class="text-sm font-semibold text-slate-700">
@@ -610,10 +853,12 @@
 
 
 
-            <!-- Exams -->
+            <!-- ================================================= -->
+            <!-- EXAMS -->
+            <!-- ================================================= -->
 
             <a
-                href="#"
+                href="{% url 'examinations:exam_list' %}"
                 class="
                     group
                     rounded-xl
@@ -622,22 +867,55 @@
                     p-4
                     hover:border-orange-300
                     hover:bg-orange-50
-                    transition
+                    transition-all
+                    duration-200
                 "
             >
 
                 <div class="
-                    w-9
-                    h-9
-                    rounded-lg
+                    w-10
+                    h-10
+                    rounded-xl
                     bg-orange-50
                     text-orange-600
                     flex
                     items-center
                     justify-center
                     mb-3
+                    group-hover:scale-105
+                    transition
                 ">
-                    📝
+
+                    <!-- Clipboard Icon -->
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <rect
+                            x="5"
+                            y="4"
+                            width="14"
+                            height="17"
+                            rx="2"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            d="M9 4V3h6v1"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            d="M9 10h6M9 14h6M9 18h3"
+                        />
+
+                    </svg>
+
                 </div>
 
                 <p class="text-sm font-semibold text-slate-700">
@@ -652,10 +930,12 @@
 
 
 
-            <!-- Fees -->
+            <!-- ================================================= -->
+            <!-- FEES -->
+            <!-- ================================================= -->
 
             <a
-                href="#"
+                href="{% url 'fees:enter' %}"
                 class="
                     group
                     rounded-xl
@@ -664,22 +944,55 @@
                     p-4
                     hover:border-amber-300
                     hover:bg-amber-50
-                    transition
+                    transition-all
+                    duration-200
                 "
             >
 
                 <div class="
-                    w-9
-                    h-9
-                    rounded-lg
+                    w-10
+                    h-10
+                    rounded-xl
                     bg-amber-50
                     text-amber-600
                     flex
                     items-center
                     justify-center
                     mb-3
+                    group-hover:scale-105
+                    transition
                 ">
-                    ₦
+
+                    <!-- Wallet/Card Icon -->
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="14"
+                            rx="2"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            d="M3 9h18"
+                        />
+
+                        <path
+                            stroke-linecap="round"
+                            d="M15 14h3"
+                        />
+
+                    </svg>
+
                 </div>
 
                 <p class="text-sm font-semibold text-slate-700">
@@ -705,7 +1018,9 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
 
+        <!-- ================================================= -->
         <!-- SCHOOL OVERVIEW -->
+        <!-- ================================================= -->
 
         <div class="
             lg:col-span-2
@@ -745,8 +1060,6 @@
             </div>
 
 
-            <!-- Overview rows -->
-
             <div class="space-y-5">
 
 
@@ -772,7 +1085,7 @@
                         </div>
 
                         <span class="text-xs font-semibold text-slate-700">
-                            78
+                            {{ total_teachers }}
                         </span>
 
                     </div>
@@ -812,7 +1125,7 @@
                         </div>
 
                         <span class="text-xs font-semibold text-slate-700">
-                            32
+                            {{ total_classes }}
                         </span>
 
                     </div>
@@ -852,7 +1165,7 @@
                         </div>
 
                         <span class="text-xs font-semibold text-slate-700">
-                            ₦12.4M
+                            ₦{{ total_fees_paid|floatformat:0 }}
                         </span>
 
                     </div>
@@ -871,7 +1184,8 @@
             </div>
 
 
-            <!-- Bottom information -->
+
+            <!-- Bottom Information -->
 
             <div class="
                 grid
@@ -884,34 +1198,54 @@
                 border-slate-100
             ">
 
-                <div>
+                <div class="
+                    rounded-xl
+                    bg-slate-50
+                    p-4
+                ">
+
                     <p class="text-[11px] text-slate-400">
                         Teachers
                     </p>
 
                     <p class="text-lg font-bold text-slate-800 mt-1">
-                        78
+                        {{ total_teachers }}
                     </p>
+
                 </div>
 
-                <div>
+
+                <div class="
+                    rounded-xl
+                    bg-slate-50
+                    p-4
+                ">
+
                     <p class="text-[11px] text-slate-400">
                         Classes
                     </p>
 
                     <p class="text-lg font-bold text-slate-800 mt-1">
-                        32
+                        {{ total_classes }}
                     </p>
+
                 </div>
 
-                <div>
+
+                <div class="
+                    rounded-xl
+                    bg-slate-50
+                    p-4
+                ">
+
                     <p class="text-[11px] text-slate-400">
                         Fees
                     </p>
 
                     <p class="text-lg font-bold text-slate-800 mt-1">
-                        ₦12.4M
+                        ₦{{ total_fees_paid|floatformat:0 }}
                     </p>
+
                 </div>
 
             </div>
@@ -920,7 +1254,9 @@
 
 
 
+        <!-- ================================================= -->
         <!-- SYSTEM CARD -->
+        <!-- ================================================= -->
 
         <div class="
             relative
@@ -931,6 +1267,8 @@
             text-white
             shadow-sm
         ">
+
+            <!-- Decorative circles -->
 
             <div class="
                 absolute
@@ -966,6 +1304,8 @@
                     mb-5
                 ">
 
+                    <!-- Shield / Security Icon -->
+
                     <svg
                         class="w-5 h-5"
                         fill="none"
@@ -973,16 +1313,17 @@
                         stroke="currentColor"
                         stroke-width="1.8"
                     >
+
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-7a2 2 0 00-2-2H6a2 2 0 00-2 2v7a2 2 0 002 2z"
+                            d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-3z"
                         />
 
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M8 10V7a4 4 0 118 0v3"
+                            d="M9 12l2 2 4-4"
                         />
 
                     </svg>
@@ -1027,6 +1368,8 @@
                 <div class="mt-6 space-y-3">
 
 
+                    <!-- Feature 1 -->
+
                     <div class="flex items-center gap-3">
 
                         <span class="
@@ -1037,9 +1380,23 @@
                             flex
                             items-center
                             justify-center
-                            text-xs
+                            text-brand-blue
                         ">
-                            ✓
+
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M5 12l4 4L19 6"
+                                />
+                            </svg>
+
                         </span>
 
                         <span class="text-xs text-slate-300">
@@ -1049,6 +1406,8 @@
                     </div>
 
 
+                    <!-- Feature 2 -->
+
                     <div class="flex items-center gap-3">
 
                         <span class="
@@ -1059,9 +1418,23 @@
                             flex
                             items-center
                             justify-center
-                            text-xs
+                            text-brand-blue
                         ">
-                            ✓
+
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M5 12l4 4L19 6"
+                                />
+                            </svg>
+
                         </span>
 
                         <span class="text-xs text-slate-300">
@@ -1071,6 +1444,8 @@
                     </div>
 
 
+                    <!-- Feature 3 -->
+
                     <div class="flex items-center gap-3">
 
                         <span class="
@@ -1081,9 +1456,23 @@
                             flex
                             items-center
                             justify-center
-                            text-xs
+                            text-brand-blue
                         ">
-                            ✓
+
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M5 12l4 4L19 6"
+                                />
+                            </svg>
+
                         </span>
 
                         <span class="text-xs text-slate-300">
@@ -1101,5 +1490,74 @@
     </div>
 
 </div>
+{
+
+
+}
+
+<div class="max-w-lg mx-auto py-16 px-4">
+    <h1 class="text-2xl font-bold text-slate-900 mb-2">Track Your Application</h1>
+    <p class="text-sm text-slate-500 mb-6">Enter your application reference and phone number to check your status.</p>
+
+    <form method="post" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-8">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="mb-4 p-3 rounded-lg bg-red-50 text-red-700 text-sm">{{ form.non_field_errors }}</div>
+        {% endif %}
+        {% for field in form %}
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<p class="text-red-600 text-xs mt-1">{{ field.errors|striptags }}</p>{% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="w-full bg-blue-600 text-white font-medium py-2.5 rounded-lg hover:bg-blue-700 transition">
+            Check Status
+        </button>
+    </form>
+
+    {% if application %}
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+        <p class="text-sm text-slate-500 mb-1">Application Reference</p>
+        <p class="font-bold text-lg text-slate-900 mb-6">{{ application.reference }}</p>
+
+        <div class="space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-xs">✓</span>
+                <span class="text-sm text-slate-700">Application Submitted</span>
+            </div>
+
+            {% if application.status == "PENDING" %}
+            <div class="flex items-center gap-3">
+                <span class="w-6 h-6 rounded-full border-2 border-amber-400 flex items-center justify-center text-xs">⏳</span>
+                <span class="text-sm text-slate-700">Admission Decision — <strong>Pending</strong></span>
+            </div>
+            {% elif application.status == "APPROVED" %}
+            <div class="flex items-center gap-3">
+                <span class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-xs">✓</span>
+                <span class="text-sm text-slate-700">Admission Decision — <strong>Approved</strong></span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs">⏳</span>
+                <span class="text-sm text-slate-500">Account Activation — check with the school for your activation link</span>
+            </div>
+            {% elif application.status == "REJECTED" %}
+            <div class="flex items-center gap-3">
+                <span class="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center text-xs">✕</span>
+                <span class="text-sm text-slate-700">Application <strong>Not Successful</strong></span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
 
 {% endblock %}
+
+
+
+
+
+
+
+

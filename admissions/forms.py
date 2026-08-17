@@ -119,3 +119,46 @@ class AdmissionApplicationForm(forms.ModelForm):
             "guardian_email": "Parent / Guardian Email",
             "guardian_relationship": "Relationship",
         }
+
+
+from academics.models import Class as SchoolClass
+
+
+class AdmissionApproveForm(forms.Form):
+    class_obj = forms.ModelChoiceField(
+        queryset=SchoolClass.objects.all(),
+        widget=forms.Select(attrs={"class": INPUT_CLASSES}),
+        label="Assign to Class",
+    )
+    admission_no = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(attrs={"class": INPUT_CLASSES}),
+        label="Admission Number",
+    )
+
+from academics.models import Class as SchoolClass
+class AdmissionApproveForm(forms.Form):
+    class_obj = forms.ModelChoiceField(
+        queryset=SchoolClass.objects.all(),
+        widget=forms.Select(attrs={"class": INPUT_CLASSES}),
+        label="Assign to Class",
+    )
+    admission_no = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(attrs={"class": INPUT_CLASSES}),
+        label="Admission Number",
+    )
+
+
+
+class TrackApplicationForm(forms.Form):
+    reference = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(attrs={"class": INPUT_CLASSES, "placeholder": "e.g. ADM-2026-00001"}),
+        label="Application Reference",
+    )
+    phone = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(attrs={"class": INPUT_CLASSES, "placeholder": "Guardian phone number"}),
+        label="Phone Number",
+    )
