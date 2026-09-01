@@ -1,4 +1,4 @@
-PART 1 OF 3
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -494,18 +494,46 @@ PART 1 OF 3
   </nav>
 
   <script>
-    // Mobile menu toggle
-    document.addEventListener('DOMContentLoaded', function() {
-      const mobileBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
+document.addEventListener("DOMContentLoaded", function () {
+    const mobileBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
 
-      if (mobileBtn && mobileMenu) {
-        mobileBtn.addEventListener('click', function() {
-          mobileMenu.classList.toggle('hidden');
-        });
-      }
+    if (!mobileBtn || !mobileMenu) {
+        return;
+    }
+
+    // Open / close menu when hamburger is clicked
+    mobileBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        mobileMenu.classList.toggle("hidden");
     });
-  </script>
+
+    // Close menu when scrolling
+    window.addEventListener("scroll", function () {
+        mobileMenu.classList.add("hidden");
+    }, { passive: true });
+
+    // Close menu when clicking outside it
+    document.addEventListener("click", function (event) {
+        if (
+            !mobileMenu.classList.contains("hidden") &&
+            !mobileMenu.contains(event.target) &&
+            !mobileBtn.contains(event.target)
+        ) {
+            mobileMenu.classList.add("hidden");
+        }
+    });
+
+    // Close menu when clicking a menu link
+    const menuLinks = mobileMenu.querySelectorAll("a");
+
+    menuLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+            mobileMenu.classList.add("hidden");
+        });
+    });
+});
+</script>
 
   <!-- ===== HERO SECTION WITH CAROUSEL BACKGROUND ===== -->
   <section class="hero-carousel" id="heroCarousel">
@@ -2032,11 +2060,11 @@ PART 1 OF 3
     // Initialize autoplay
     resetAutoplay();
 
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
-    });
+    // // Mobile menu toggle
+    // document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    //   const menu = document.getElementById('mobile-menu');
+    //   menu.classList.toggle('hidden');
+    // });
   </script>
 </body>
 </html>
