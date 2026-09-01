@@ -1,3 +1,4 @@
+PART 1 OF 3
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +41,7 @@
       }
     }
   </script>
+
   <style>
     .text-gradient {
       background: linear-gradient(to right, #2563eb, #7c3aed);
@@ -47,24 +49,35 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     .card-hover {
       transition: all 0.25s ease-in-out;
     }
+
     .card-hover:hover {
       transform: translateY(-6px);
-      box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1), 0 10px 25px -5px rgba(0, 0, 0, 0.02);
     }
+
     .bg-soft-gradient {
       background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
     }
+
     body {
       font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     .icon-md {
       width: 24px;
       height: 24px;
       stroke-width: 1.8;
     }
+
     .icon-lg {
       width: 32px;
       height: 32px;
@@ -77,6 +90,145 @@
       height: 90vh;
       min-height: 600px;
       overflow: hidden;
+    }
+
+    .hero-content {
+      width: 100%;
+    }
+
+    .hero-content > div {
+      width: 100%;
+    }
+
+    /* Responsive frontend fixes */
+    @media (max-width: 1023px) {
+      .hero-carousel {
+        height: auto;
+        min-height: 720px;
+      }
+
+      .hero-content {
+        align-items: center;
+        padding-top: 5.5rem;
+        padding-bottom: 5.5rem;
+      }
+
+      .carousel-btn {
+        width: 44px;
+        height: 44px;
+      }
+
+      .carousel-btn.prev {
+        left: 12px;
+      }
+
+      .carousel-btn.next {
+        right: 12px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-carousel {
+        min-height: 760px;
+      }
+
+      .hero-content {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 4.5rem;
+        padding-bottom: 5rem;
+      }
+
+      .hero-content > div {
+        max-width: 100%;
+      }
+
+      .carousel-btn {
+        width: 40px;
+        height: 40px;
+        top: 48%;
+      }
+
+      .carousel-btn.prev {
+        left: 8px;
+      }
+
+      .carousel-btn.next {
+        right: 8px;
+      }
+
+      .carousel-dots {
+        bottom: 16px;
+        gap: 8px;
+      }
+
+      .carousel-dot {
+        width: 9px;
+        height: 9px;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .hero-carousel {
+        min-height: 790px;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2.35rem, 10vw, 3.4rem);
+        line-height: 1.08;
+      }
+
+      .hero-content p {
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+
+      .hero-content .fade-in-up {
+        animation-duration: 0.7s;
+      }
+
+      .hero-content .mt-8 {
+        margin-top: 1.5rem;
+      }
+
+      .hero-content .mt-12 {
+        margin-top: 2rem;
+        padding-top: 1.25rem;
+        gap: 1rem;
+      }
+
+      .hero-content .mt-12 > div {
+        min-width: calc(50% - 0.5rem);
+      }
+
+      .hero-content .mt-8 > a {
+        width: 100%;
+        justify-content: center;
+      }
+
+      section {
+        scroll-margin-top: 80px;
+      }
+
+      .card-hover:hover {
+        transform: none;
+      }
+    }
+
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .hero-content .mt-8 > a {
+        min-width: 180px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .hero-content .mt-12 > div {
+        min-width: 100%;
+      }
+
+      .hero-carousel {
+        min-height: 850px;
+      }
     }
 
     .hero-slide {
@@ -98,8 +250,8 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, 
-        rgba(48, 48, 49, 0.88) 0%, 
+      background: linear-gradient(135deg,
+        rgba(48, 48, 49, 0.88) 0%,
         rgba(64, 64, 73, 0.78) 50%,
         rgba(22, 21, 22, 0.72) 100%
       );
@@ -183,6 +335,7 @@
     .dropdown:hover .dropdown-menu {
       display: block;
     }
+
     .dropdown-menu {
       display: none;
       position: absolute;
@@ -195,12 +348,14 @@
       padding: 0.5rem 0;
       z-index: 50;
     }
+
     .dropdown-menu a {
       display: block;
       padding: 0.5rem 1.5rem;
       color: #374151;
       transition: all 0.15s;
     }
+
     .dropdown-menu a:hover {
       background: #f3f4f6;
       color: #1e40af;
@@ -227,18 +382,21 @@
     .delay-3 { animation-delay: 0.6s; }
   </style>
 </head>
+
 <body class="bg-gray-50 text-gray-800 font-inter antialiased">
 
   <!-- ===== NAVBAR ===== -->
   <nav class="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200/60 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
       <div class="flex items-center justify-between h-20">
+
         <!-- Logo -->
         <div class="flex items-center gap-3 shrink-0">
           <a href="{% url 'home' %}" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center shadow-md shadow-primary-200">
               <span class="text-white font-bold text-xl tracking-tight">EC</span>
             </div>
+
             <span class="text-2xl font-bold tracking-tight text-primary-800">
               Edu<span class="text-gradient">Core</span>
             </span>
@@ -250,12 +408,15 @@
           <a href="{% url 'home' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
             Home
           </a>
+
           <a href="{% url 'about' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/about/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
             About
           </a>
+
           <a href="{% url 'features' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/features/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
             Features
           </a>
+
           <a href="{% url 'contact' %}" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-700 hover:bg-gray-50 rounded-lg transition-all {% if request.path == '/contact/' %}text-primary-700 border-b-2 border-primary-500 font-semibold{% endif %}">
             Contact
           </a>
@@ -263,15 +424,40 @@
 
         <!-- Right Buttons -->
         <div class="flex items-center gap-3">
+
           <a href="{% url 'login' %}" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-full transition-all">
             Log in
           </a>
-          <a href="{% url 'login' %}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white text-sm font-semibold rounded-full transition-all duration-200 shadow-md shadow-primary-200 hover:shadow-lg hover:shadow-primary-300 hover:scale-[1.02]">
+
+          <a href="{% url 'login' %}" class="hidden lg:inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white text-sm font-semibold rounded-full transition-all duration-200 shadow-md shadow-primary-200 hover:shadow-lg hover:shadow-primary-300 hover:scale-[1.02]">
             Get Started
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="18"
+                 height="18"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
           </a>
-          <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-all" aria-label="Toggle menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+
+          <button id="mobile-menu-btn"
+                  class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-all"
+                  aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
           </button>
         </div>
       </div>
@@ -280,23 +466,29 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-200/60">
       <div class="max-w-7xl mx-auto px-6 py-4 space-y-2">
+
         <a href="{% url 'home' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
           Home
         </a>
+
         <a href="{% url 'about' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/about/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
           About
         </a>
+
         <a href="{% url 'features' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/features/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
           Features
         </a>
+
         <a href="{% url 'contact' %}" class="block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg {% if request.path == '/contact/' %}text-primary-700 bg-primary-50 font-semibold{% endif %}">
           Contact
         </a>
+
         <div class="pt-2 border-t border-gray-200/60">
           <a href="{% url 'login' %}" class="block w-full text-center px-4 py-2.5 bg-gradient-to-r from-primary-600 to-accent-purple text-white text-sm font-semibold rounded-full">
             Get Started
           </a>
         </div>
+
       </div>
     </div>
   </nav>
@@ -306,7 +498,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const mobileBtn = document.getElementById('mobile-menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
-      
+
       if (mobileBtn && mobileMenu) {
         mobileBtn.addEventListener('click', function() {
           mobileMenu.classList.toggle('hidden');
@@ -317,6 +509,7 @@
 
   <!-- ===== HERO SECTION WITH CAROUSEL BACKGROUND ===== -->
   <section class="hero-carousel" id="heroCarousel">
+
     <!-- Slide 1 -->
     <div class="hero-slide active" style="background-image: url('{% static 'images/hero-bg-1.jpg' %}');"></div>
     <div class="hero-slide" style="background-image: url('{% static 'images/hero-bg-2.jpg' %}');"></div>
@@ -324,11 +517,36 @@
     <div class="hero-slide" style="background-image: url('{% static 'images/hero-bg-4.jpg' %}');"></div>
 
     <!-- Carousel Controls -->
-    <button class="carousel-btn prev" onclick="changeSlide(-1)" aria-label="Previous slide">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <button class="carousel-btn prev"
+            onclick="changeSlide(-1)"
+            aria-label="Previous slide">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="24"
+           height="24"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2.5"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
     </button>
-    <button class="carousel-btn next" onclick="changeSlide(1)" aria-label="Next slide">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+
+    <button class="carousel-btn next"
+            onclick="changeSlide(1)"
+            aria-label="Next slide">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="24"
+           height="24"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2.5"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
     </button>
 
     <!-- Carousel Dots -->
@@ -342,9 +560,11 @@
     <!-- Hero Content -->
     <div class="hero-content max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
       <div class="max-w-3xl">
+
         <span class="inline-block text-xs font-semibold tracking-widest uppercase text-blue-200 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/30 mb-6 fade-in-up">
           Excellence in Education
         </span>
+
         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white fade-in-up delay-1">
           Broad & Balanced
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">
@@ -352,38 +572,84 @@
           </span>
           for Every Child
         </h1>
+
         <p class="mt-4 text-lg md:text-xl text-blue-50/90 max-w-2xl fade-in-up delay-2">
           From Pre-School to Senior Secondary — nurturing disciplined, hardworking and forward-thinking students with EduCore.
         </p>
+
         <div class="mt-8 flex flex-wrap gap-4 fade-in-up delay-3">
-          <a href="{% url 'login' %}" 
+
+          <a href="{% url 'login' %}"
              class="px-8 py-3.5 bg-white text-primary-700 rounded-xl font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 flex items-center gap-2">
             <span>Get Started</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="20"
+                 height="20"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
           </a>
-          <a href="#features" 
+
+          <a href="#features"
              class="inline-flex items-center gap-2 px-6 py-3.5 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white font-semibold hover:bg-white/30 transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="20"
+                 height="20"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+
             <span>Learn More</span>
           </a>
 
-          <a href="{% url 'admissions:apply' %}" class="inline-flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-700 transition">
+          <a href="{% url 'admissions:apply' %}"
+             class="inline-flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-700 transition">
             Apply for Admission
           </a>
 
-          <a href="{% url 'admissions:track' %}" class="inline-flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-700 transition">
+          <a href="{% url 'admissions:track' %}"
+             class="inline-flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-700 transition">
             Already applied? Track your application →
           </a>
 
         </div>
-        
+
         <!-- Stats -->
         <div class="mt-12 flex flex-wrap gap-8 border-t border-white/20 pt-8 fade-in-up delay-3">
-          <div><span class="block text-2xl font-bold text-white">2013</span><span class="text-sm text-blue-200">Founded</span></div>
-          <div><span class="block text-2xl font-bold text-white">Pre–SSS</span><span class="text-sm text-blue-200">School Levels</span></div>
-          <div><span class="block text-2xl font-bold text-white">100%</span><span class="text-sm text-blue-200">Committed Faculty</span></div>
-          <div><span class="block text-2xl font-bold text-white">Award</span><span class="text-sm text-blue-200">Winning School</span></div>
+
+          <div>
+            <span class="block text-2xl font-bold text-white">2013</span>
+            <span class="text-sm text-blue-200">Founded</span>
+          </div>
+
+          <div>
+            <span class="block text-2xl font-bold text-white">Pre–SSS</span>
+            <span class="text-sm text-blue-200">School Levels</span>
+          </div>
+
+          <div>
+            <span class="block text-2xl font-bold text-white">100%</span>
+            <span class="text-sm text-blue-200">Committed Faculty</span>
+          </div>
+
+          <div>
+            <span class="block text-2xl font-bold text-white">Award</span>
+            <span class="text-sm text-blue-200">Winning School</span>
+          </div>
+
         </div>
+
       </div>
     </div>
   </section>
@@ -391,17 +657,34 @@
   <!-- ===== WHY CHOOSE US ===== -->
   <section id="features" class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
     <div class="max-w-7xl mx-auto">
+
       <div class="text-center mb-14">
-        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">Why Choose Us</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Built for Every School's Growth</h2>
-        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">We combine academic rigour with moral formation, preparing students for a life of impact.</p>
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">
+          Why Choose Us
+        </span>
+
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">
+          Built for Every School's Growth
+        </h2>
+
+        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">
+          We combine academic rigour with moral formation, preparing students for a life of impact.
+        </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
         <!-- Card 1: Academic Excellence -->
         <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
           <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-7 h-7 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
               <line x1="8" y1="7" x2="16" y2="7"/>
@@ -409,70 +692,142 @@
               <line x1="8" y1="15" x2="12" y2="15"/>
             </svg>
           </div>
-          <h3 class="text-lg font-semibold text-gray-900">Academic Excellence</h3>
-          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Proven curriculum from Pre-School to SSS, aligned with national standards and beyond. Our students consistently excel in exams and competitions.</p>
+
+          <h3 class="text-lg font-semibold text-gray-900">
+            Academic Excellence
+          </h3>
+
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+            Proven curriculum from Pre-School to SSS, aligned with national standards and beyond. Our students consistently excel in exams and competitions.
+          </p>
         </div>
 
         <!-- Card 2: Character Formation -->
         <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
           <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-7 h-7 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               <path d="M9 12l2 2 4-4"/>
             </svg>
           </div>
-          <h3 class="text-lg font-semibold text-gray-900">Character Formation</h3>
-          <p class="text-gray-500 text-sm mt-2 leading-relaxed">We raise good citizens — literate, disciplined, hardworking and God-fearing — through purposeful value education embedded in every subject.</p>
+
+          <h3 class="text-lg font-semibold text-gray-900">
+            Character Formation
+          </h3>
+
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+            We raise good citizens — literate, disciplined, hardworking and God-fearing — through purposeful value education embedded in every subject.
+          </p>
         </div>
 
         <!-- Card 3: 21st Century Teachers -->
         <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
           <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-7 h-7 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
               <circle cx="9" cy="7" r="4"/>
               <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
               <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
           </div>
-          <h3 class="text-lg font-semibold text-gray-900">21st Century Teachers</h3>
-          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Our educators are trained, passionate and continuously upskilled. Every classroom is a place of discovery, not just instruction.</p>
+
+          <h3 class="text-lg font-semibold text-gray-900">
+            21st Century Teachers
+          </h3>
+
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+            Our educators are trained, passionate and continuously upskilled. Every classroom is a place of discovery, not just instruction.
+          </p>
         </div>
 
         <!-- Card 4: Safe Environment -->
         <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
           <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-7 h-7 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
           </div>
-          <h3 class="text-lg font-semibold text-gray-900">Safe Environment</h3>
-          <p class="text-gray-500 text-sm mt-2 leading-relaxed">A secure, nurturing campus where every child feels valued, protected and motivated to reach their highest potential.</p>
+
+          <h3 class="text-lg font-semibold text-gray-900">
+            Safe Environment
+          </h3>
+
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+            A secure, nurturing campus where every child feels valued, protected and motivated to reach their highest potential.
+          </p>
         </div>
 
         <!-- Card 5: Award-Winning -->
         <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
           <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-7 h-7 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
             </svg>
           </div>
-          <h3 class="text-lg font-semibold text-gray-900">Award-Winning</h3>
-          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Recipients of Ogun State Governor's Essay Competition award, with students excelling in regional and national competitions.</p>
+
+          <h3 class="text-lg font-semibold text-gray-900">
+            Award-Winning
+          </h3>
+
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+            Recipients of Ogun State Governor's Essay Competition award, with students excelling in regional and national competitions.
+          </p>
         </div>
 
         <!-- Card 6: Holistic Development -->
         <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 hover:border-primary-300 hover:shadow-lg transition-all">
           <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-7 h-7 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
               <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
           </div>
-          <h3 class="text-lg font-semibold text-gray-900">Holistic Development</h3>
-          <p class="text-gray-500 text-sm mt-2 leading-relaxed">Sports, arts, music, tech clubs and leadership programs complement academics for a truly well-rounded education.</p>
+
+          <h3 class="text-lg font-semibold text-gray-900">
+            Holistic Development
+          </h3>
+
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+            Sports, arts, music, tech clubs and leadership programs complement academics for a truly well-rounded education.
+          </p>
         </div>
+
       </div>
 
       <div class="mt-12 text-center">
@@ -481,8 +836,117 @@
           12+ Years of Excellence
         </p>
       </div>
+
     </div>
   </section>
+
+  <!-- ===== OUR ACHIEVEMENTS ===== -->
+  <section class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="text-center mb-14">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-primary-600 bg-primary-100 px-4 py-1.5 rounded-full border border-primary-200">
+          Achievements
+        </span>
+
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">
+          Proven Results, Real Impact
+        </h2>
+
+        <p class="text-gray-500 max-w-2xl mx-auto mt-3 text-base">
+          Our students and faculty have earned recognition at local, state and national levels — a testament to our commitment to excellence.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Achievement 1 -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 text-center hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-8 h-8 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+
+          <span class="block text-3xl font-bold text-primary-600">
+            2018
+          </span>
+
+          <p class="text-sm text-gray-600 mt-2 font-medium">
+            Governor's Essay Competition Winner
+          </p>
+
+          <p class="text-xs text-gray-400 mt-1">
+            Ogun State Nursery & Primary School winner — a milestone achievement for our pupils.
+          </p>
+        </div>
+
+        <!-- Achievement 2 -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 text-center hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-8 h-8 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+
+          <span class="block text-3xl font-bold text-primary-600">
+            12+
+          </span>
+
+          <p class="text-sm text-gray-600 mt-2 font-medium">
+            Years of Consistent Excellence
+          </p>
+
+          <p class="text-xs text-gray-400 mt-1">
+            Top-performing students in state assessments year after year since 2013.
+          </p>
+        </div>
+
+        <!-- Achievement 3 -->
+        <div class="card-hover bg-gray-50 rounded-2xl p-6 border border-gray-200/70 text-center hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-8 h-8 text-primary-600"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+
+          <span class="block text-3xl font-bold text-primary-600">
+            100%
+          </span>
+
+          <p class="text-sm text-gray-600 mt-2 font-medium">
+            Bursary & Scholarship Awards
+          </p>
+
+          <p class="text-xs text-gray-400 mt-1">
+            Best exit-class students receive automatic bursary for the next class level.
+          </p>
+        </div>
+
+    </section>
 
   <!-- ===== OUR ACHIEVEMENTS ===== -->
   <section class="py-20 px-6 sm:px-8 lg:px-12 bg-white">
