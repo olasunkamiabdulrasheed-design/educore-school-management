@@ -206,8 +206,9 @@
 
                         {% csrf_token %}
 
-                        <a href="{% url 'admissions:approve' application.pk %}" class="w-32 px-2 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition">
-                            ✓ Approve
+                        <a href="{% url 'admissions:approve' application.pk %}"
+                            class="status-btn approve-btn">
+                             ✓ Approve
                         </a>
 
                     </form>
@@ -523,6 +524,11 @@
     font-weight: 700;
     font-size: 14px;
     transition: .2s ease;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .approve-btn {
